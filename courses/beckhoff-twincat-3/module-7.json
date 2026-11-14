@@ -1,11 +1,295 @@
 {
  "title": "Module 7: Debugging and troubleshooting",
- "soon": true,
- "topics": [
-  "Online monitoring",
-  "Watch windows",
-  "Breakpoints",
-  "Common programming errors",
-  "Troubleshooting techniques"
+ "lessons": [
+  {
+   "t": "Online monitoring",
+   "c": "<p>In online mode TwinCAT shows live variable values beside your code. Log in to the PLC, start it, and watch signals change in real time.</p><p>You can write test values, but be careful on a real machine: forcing outputs can cause movement.</p>",
+   "x": "You see bSensor turn TRUE as a box passes, and watch bDiverter follow.",
+   "ex": "Log in to a simulated PLC and watch a counter change.",
+   "q": [
+    [
+     "Online mode shows:",
+     [
+      "Only the file size",
+      "Live variable values",
+      "Printer status"
+     ],
+     1,
+     "Values update as the PLC runs."
+    ],
+    [
+     "You must be careful writing values because:",
+     [
+      "It deletes code",
+      "It is slow",
+      "Outputs can cause real movement"
+     ],
+     2,
+     "Forced outputs move machinery."
+    ],
+    [
+     "Before monitoring you:",
+     [
+      "Log in to the PLC",
+      "Delete the project",
+      "Unplug it"
+     ],
+     0,
+     "Login connects the editor to the target."
+    ],
+    [
+     "Online monitoring helps to:",
+     [
+      "Edit the PC clock",
+      "Find why logic is not working",
+      "Draw diagrams"
+     ],
+     1,
+     "You can see actual signal states."
+    ],
+    [
+     "Live values are shown:",
+     [
+      "Only in a PDF",
+      "On the desktop wallpaper",
+      "Beside variables in the code"
+     ],
+     2,
+     "TwinCAT overlays them in the editor."
+    ]
+   ]
+  },
+  {
+   "t": "Watch windows",
+   "c": "<p>A watch window lists chosen variables with live values in one place. Add variables, expand structures, and write test values to check behaviour.</p><p>It is ideal when the variables you care about live in different programs.</p>",
+   "x": "Watch bStart, nStep and bMotor together to see why a sequence stalls.",
+   "ex": "Create a watch list for a motor and its fault flags.",
+   "q": [
+    [
+     "A watch window lists:",
+     [
+      "Chosen variables with live values",
+      "All Windows files",
+      "Only errors"
+     ],
+     0,
+     "You pick what to monitor."
+    ],
+    [
+     "It is useful when variables are:",
+     [
+      "All in one place only",
+      "Spread across programs",
+      "Missing"
+     ],
+     1,
+     "One list pulls them together."
+    ],
+    [
+     "Structures in a watch window can be:",
+     [
+      "Hidden always",
+      "Deleted",
+      "Expanded"
+     ],
+     2,
+     "You can see each member."
+    ],
+    [
+     "Writing test values lets you:",
+     [
+      "Check how the logic reacts",
+      "Format the PLC",
+      "Change the fieldbus"
+     ],
+     0,
+     "You can simulate conditions."
+    ],
+    [
+     "A watch list is best for:",
+     [
+      "Printing",
+      "Quick tuning and checking",
+      "Storing passwords"
+     ],
+     1,
+     "It gives a fast overview."
+    ]
+   ]
+  },
+  {
+   "t": "Breakpoints",
+   "c": "<p>A breakpoint pauses the PLC at a chosen line so you can step through the code and inspect values. You can step over, into and out of blocks.</p><p>Warning: halting the PLC on a real machine freezes outputs, so use breakpoints on simulators or when it is safe.</p>",
+   "x": "You set a breakpoint on the diverter line to see the values just before it fires.",
+   "ex": "Explain why a breakpoint on a moving conveyor could be risky.",
+   "q": [
+    [
+     "A breakpoint:",
+     [
+      "Deletes the line",
+      "Saves the file",
+      "Pauses the program at a line"
+     ],
+     2,
+     "Execution stops there."
+    ],
+    [
+     "Pausing a PLC on a real machine can:",
+     [
+      "Freeze outputs",
+      "Speed up the machine",
+      "Be ignored"
+     ],
+     0,
+     "Outputs hold their last state."
+    ],
+    [
+     "Step into:",
+     [
+      "Closes the project",
+      "Goes inside a called block",
+      "Opens a new file"
+     ],
+     1,
+     "You follow the call."
+    ],
+    [
+     "Breakpoints are safest on:",
+     [
+      "Running production lines",
+      "Safety circuits",
+      "Simulators or safe machines"
+     ],
+     2,
+     "Avoid stopping live processes."
+    ],
+    [
+     "Stepping lets you:",
+     [
+      "Run one line at a time",
+      "Skip all code",
+      "Change hardware"
+     ],
+     0,
+     "Each step runs a single statement."
+    ]
+   ]
+  },
+  {
+   "t": "Common programming errors",
+   "c": "<p>Frequent bugs are using = instead of :=, a missing END_IF, uninitialised variables, INT overflow, writing one output from two places, endless loops and forgetting edge detection.</p>",
+   "x": "Two programs both write bMotor, so it flips back and forth every scan.",
+   "ex": "Review a program for outputs written in more than one place.",
+   "q": [
+    [
+     "The assignment operator is:",
+     [
+      "=",
+      ":=",
+      "=="
+     ],
+     1,
+     "= compares, := assigns."
+    ],
+    [
+     "Writing one output from two places:",
+     [
+      "Is best practice",
+      "Saves memory",
+      "Causes conflicts"
+     ],
+     2,
+     "The last write wins and logic fights."
+    ],
+    [
+     "A missing END_IF causes:",
+     [
+      "A compile error",
+      "Faster code",
+      "Nothing"
+     ],
+     0,
+     "The block is not closed."
+    ],
+    [
+     "INT overflow happens when:",
+     [
+      "You use REAL",
+      "A value exceeds the type range",
+      "You use BOOL"
+     ],
+     1,
+     "INT holds a limited range."
+    ],
+    [
+     "Uninitialised variables can:",
+     [
+      "Fix bugs",
+      "Delete tasks",
+      "Start with unexpected values"
+     ],
+     2,
+     "Always give them a known start value."
+    ]
+   ]
+  },
+  {
+   "t": "Troubleshooting techniques",
+   "c": "<p>Work methodically: reproduce the fault, check inputs, then logic, then outputs. Change one thing at a time, read the error list and logger, and compare with a known good version.</p>",
+   "x": "The conveyor will not start: you check the start input, the interlocks, then the output.",
+   "ex": "Write a four-step troubleshooting checklist for a motor that will not run.",
+   "q": [
+    [
+     "The first step is to:",
+     [
+      "Reproduce and observe the fault",
+      "Rewrite everything",
+      "Reboot randomly"
+     ],
+     0,
+     "Understand what actually happens first."
+    ],
+    [
+     "Change:",
+     [
+      "Everything at once",
+      "One thing at a time",
+      "Nothing"
+     ],
+     1,
+     "So you know what fixed it."
+    ],
+    [
+     "Check in order:",
+     [
+      "Outputs only",
+      "Colours",
+      "Inputs, logic, outputs"
+     ],
+     2,
+     "Follow the signal path."
+    ],
+    [
+     "Error lists and logs help by:",
+     [
+      "Pointing to the cause",
+      "Hiding faults",
+      "Closing the project"
+     ],
+     0,
+     "They record what went wrong."
+    ],
+    [
+     "A known good version helps you:",
+     [
+      "Delete the machine",
+      "Compare and find the difference",
+      "Skip testing"
+     ],
+     1,
+     "Differences show the bug."
+    ]
+   ]
+  }
  ]
 }

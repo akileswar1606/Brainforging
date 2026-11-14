@@ -1,11 +1,298 @@
 {
  "title": "Module 8: Final practical project",
- "soon": true,
- "topics": [
-  "Automated conveyor sorting system",
-  "Sensor detection and product counting",
-  "Conveyor sequence and sorting logic",
-  "Fault handling",
-  "Final assessment"
+ "lessons": [
+  {
+   "t": "Project overview and system design",
+   "c": "<p>Your final project is an automated conveyor sorting system. Inputs: start, stop, entry sensor, size sensor. Outputs: conveyor motor, diverter, alarm lamp.</p><p>Start by writing the requirements and an I/O list, then plan the states: idle, running and fault.</p>",
+   "x": "Large boxes go to the left lane, small boxes continue straight on.",
+   "ex": "Write the I/O list and the requirements for your sorter.",
+   "q": [
+    [
+     "A good first step is:",
+     [
+      "Coding at once",
+      "Buying parts",
+      "Requirements and an I/O list"
+     ],
+     2,
+     "Planning prevents rework."
+    ],
+    [
+     "The size sensor is an:",
+     [
+      "Input",
+      "Output",
+      "Timer"
+     ],
+     0,
+     "It sends a signal into the PLC."
+    ],
+    [
+     "The diverter is an:",
+     [
+      "Input",
+      "Output",
+      "Counter"
+     ],
+     1,
+     "It is driven by the PLC."
+    ],
+    [
+     "States planned are:",
+     [
+      "Only running",
+      "Only fault",
+      "Idle, running and fault"
+     ],
+     2,
+     "These cover normal and abnormal operation."
+    ],
+    [
+     "A final project should be:",
+     [
+      "Planned, then built in stages",
+      "Written in one go",
+      "Untested"
+     ],
+     0,
+     "Staged building finds problems early."
+    ]
+   ]
+  },
+  {
+   "t": "Sensor detection and product counting",
+   "c": "<p>Detect each product with a rising edge at the entry sensor, classify it using the size sensor, and count each category with a counter. Debounce noisy signals first.</p>",
+   "x": "Each large box adds to nLarge and each small box to nSmall.",
+   "ex": "Add a reset button that clears both counts.",
+   "q": [
+    [
+     "Each product is detected by:",
+     [
+      "A level held high",
+      "A rising edge",
+      "A timer only"
+     ],
+     1,
+     "So it counts once."
+    ],
+    [
+     "The size sensor decides:",
+     [
+      "The belt speed",
+      "The voltage",
+      "Which category it is"
+     ],
+     2,
+     "Classification uses size."
+    ],
+    [
+     "Counts are kept with:",
+     [
+      "Counters",
+      "Timers",
+      "Comments"
+     ],
+     0,
+     "CTU counts events."
+    ],
+    [
+     "Debouncing the entry sensor:",
+     [
+      "Slows the belt",
+      "Prevents false counts",
+      "Adds items"
+     ],
+     1,
+     "It removes flicker."
+    ],
+    [
+     "A reset button should:",
+     [
+      "Delete the code",
+      "Stop the PLC",
+      "Clear the counts"
+     ],
+     2,
+     "It returns counters to zero."
+    ]
+   ],
+   "code": "rtEntry(CLK := bEntry);\nIF rtEntry.Q THEN\n  IF bLarge THEN nLarge := nLarge + 1;\n  ELSE nSmall := nSmall + 1;\n  END_IF\nEND_IF"
+  },
+  {
+   "t": "Conveyor sequence and sorting logic",
+   "c": "<p>Use a state machine with Idle, Running and Fault. The diverter must move after the box travels from the sensor to the diverter, so use a TON for that travel time.</p>",
+   "x": "A large box is seen, a 2-second timer runs, then the diverter pushes it off.",
+   "ex": "Estimate the travel time from belt speed and distance.",
+   "q": [
+    [
+     "The diverter delay represents:",
+     [
+      "Travel time from sensor to diverter",
+      "The PLC scan",
+      "The power-up"
+     ],
+     0,
+     "The box takes time to arrive."
+    ],
+    [
+     "That delay is made with a:",
+     [
+      "Counter",
+      "TON timer",
+      "STRUCT"
+     ],
+     1,
+     "A TON waits a set time."
+    ],
+    [
+     "A state machine stores:",
+     [
+      "The user name",
+      "The IP address",
+      "The machine state"
+     ],
+     2,
+     "CASE on a state variable."
+    ],
+    [
+     "In Running state the motor is:",
+     [
+      "On",
+      "Always off",
+      "Stuck"
+     ],
+     0,
+     "Running means the belt moves."
+    ],
+    [
+     "Time = distance divided by:",
+     [
+      "Weight",
+      "Speed",
+      "Colour"
+     ],
+     1,
+     "Time equals distance over speed."
+    ]
+   ],
+   "code": "CASE nState OF\n  0: IF bStart THEN nState := 1; END_IF\n  1: bMotor := TRUE;\n     tonDiv(IN := rtLarge.Q, PT := T#2S);\n     bDiverter := tonDiv.Q;\nEND_CASE"
+  },
+  {
+   "t": "Fault handling",
+   "c": "<p>Detect faults such as a jam (a sensor stuck on too long), a motor overload and an emergency stop. Latch alarms, stop the conveyor, and light the alarm lamp.</p><p>Provide a reset button that only works once the cause has cleared.</p>",
+   "x": "A sensor stays on for 10 seconds, a timeout trips, the belt stops and the lamp lights.",
+   "ex": "List three possible faults and how each is detected.",
+   "q": [
+    [
+     "A jam is detected when:",
+     [
+      "The belt runs normally",
+      "Start is pressed",
+      "A sensor stays on too long"
+     ],
+     2,
+     "A timeout notices a blocked sensor."
+    ],
+    [
+     "Alarms should be:",
+     [
+      "Latched until reset",
+      "Ignored",
+      "Deleted at once"
+     ],
+     0,
+     "So the fault is not missed."
+    ],
+    [
+     "On a fault the conveyor should:",
+     [
+      "Speed up",
+      "Stop",
+      "Keep running"
+     ],
+     1,
+     "Stopping prevents damage."
+    ],
+    [
+     "A reset should work only when:",
+     [
+      "Always",
+      "Never",
+      "The cause has cleared"
+     ],
+     2,
+     "Otherwise the fault returns."
+    ],
+    [
+     "The alarm lamp tells the operator:",
+     [
+      "A fault exists",
+      "The machine is idle",
+      "The time"
+     ],
+     0,
+     "It signals the problem."
+    ]
+   ],
+   "code": "tonJam(IN := bEntry, PT := T#10S);\nIF tonJam.Q THEN bFault := TRUE; END_IF\nIF bReset AND NOT bEntry THEN bFault := FALSE; END_IF\nbMotor := bRun AND NOT bFault;"
+  },
+  {
+   "t": "Final assessment",
+   "c": "<p>Review the course: the scan cycle, Structured Text statements, function blocks, timers and counters, state machines, interlocks, fault handling and debugging. Pass this quiz to complete the TwinCAT 3 fundamentals course.</p>",
+   "x": "You now have the skills to build and debug a small automation project.",
+   "ex": "Run your sorter on a simulator and test a jam fault.",
+   "q": [
+    [
+     "The PLC scan order is:",
+     [
+      "Write outputs, then read inputs",
+      "Read inputs, run program, write outputs",
+      "Run program only"
+     ],
+     1,
+     "That is the scan cycle."
+    ],
+    [
+     "A TON turns on its output:",
+     [
+      "Immediately",
+      "Never",
+      "After IN is TRUE for PT"
+     ],
+     2,
+     "TON is an on-delay."
+    ],
+    [
+     "A function block instance keeps:",
+     [
+      "Its own data",
+      "Nothing",
+      "Only constants"
+     ],
+     0,
+     "Each instance has memory."
+    ],
+    [
+     "To count a box only once you use:",
+     [
+      "A longer belt",
+      "Edge detection",
+      "A bigger motor"
+     ],
+     1,
+     "Rising edge triggers once."
+    ],
+    [
+     "Online monitoring lets you:",
+     [
+      "Edit hardware",
+      "Print code only",
+      "See live values while running"
+     ],
+     2,
+     "Live values aid debugging."
+    ]
+   ]
+  }
  ]
 }

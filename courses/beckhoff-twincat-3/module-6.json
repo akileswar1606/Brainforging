@@ -1,11 +1,299 @@
 {
  "title": "Module 6: Practical PLC applications",
- "soon": true,
- "topics": [
-  "Motor control",
-  "Sensor logic",
-  "Interlocking",
-  "Sequence control",
-  "Conveyor applications"
+ "lessons": [
+  {
+   "t": "Motor control",
+   "c": "<p>A basic start/stop uses a seal-in (latch): pressing Start turns the output on, and the output then holds itself on until Stop or a fault breaks the circuit.</p><p>Stop buttons are normally wired as normally closed, so a broken wire also stops the motor.</p>",
+   "x": "A conveyor motor starts on the green button and stops on the red button or on a fault.",
+   "ex": "Write the seal-in expression for a motor with Start, Stop and Overload.",
+   "q": [
+    [
+     "A seal-in keeps the motor on:",
+     [
+      "After Start is released",
+      "Only while Start is held",
+      "Never"
+     ],
+     0,
+     "The output feeds itself back to hold on."
+    ],
+    [
+     "A stop button wired normally closed means:",
+     [
+      "A broken wire starts the motor",
+      "A broken wire stops the motor",
+      "Nothing"
+     ],
+     1,
+     "It fails safe."
+    ],
+    [
+     "A fault condition in the expression:",
+     [
+      "Starts the motor",
+      "Is ignored",
+      "Forces the motor off"
+     ],
+     2,
+     "NOT bFault is ANDed with the output."
+    ],
+    [
+     "The OR with bMotor provides:",
+     [
+      "The latch",
+      "The timer",
+      "The count"
+     ],
+     0,
+     "It holds the output on."
+    ],
+    [
+     "Start can be a:",
+     [
+      "Locked switch only",
+      "Momentary push button",
+      "Counter"
+     ],
+     1,
+     "A short press is enough thanks to the latch."
+    ]
+   ],
+   "code": "bMotor := (bStart OR bMotor) AND NOT bStop AND NOT bFault;"
+  },
+  {
+   "t": "Sensor logic",
+   "c": "<p>Sensors may be normally open or normally closed. Condition raw signals in code: use edge detection (R_TRIG) to act once when a signal rises, and debounce noisy inputs.</p>",
+   "x": "Count a box once when the sensor rises, not on every scan while it is blocked.",
+   "ex": "Explain why counting without edge detection gives wrong totals.",
+   "q": [
+    [
+     "R_TRIG Q is TRUE for:",
+     [
+      "As long as CLK is TRUE",
+      "Never",
+      "One scan on a rising edge"
+     ],
+     2,
+     "It pulses once per rising edge."
+    ],
+    [
+     "Counting without edge detection:",
+     [
+      "Counts the same box many times",
+      "Counts correctly",
+      "Stops the PLC"
+     ],
+     0,
+     "It would count on every scan."
+    ],
+    [
+     "A normally closed sensor on a broken wire reads:",
+     [
+      "On",
+      "Off, so the fault is noticed",
+      "Random"
+     ],
+     1,
+     "A break looks like activation, so it is detectable."
+    ],
+    [
+     "Debouncing:",
+     [
+      "Adds noise",
+      "Deletes variables",
+      "Filters flicker"
+     ],
+     2,
+     "It waits for a steady signal."
+    ],
+    [
+     "Sensor logic should be:",
+     [
+      "Conditioned before use",
+      "Ignored",
+      "Written in hardware only"
+     ],
+     0,
+     "Clean signals make reliable logic."
+    ]
+   ],
+   "code": "VAR\n  rtBox : R_TRIG;\n  bSensor : BOOL;\n  nBoxes : INT;\nEND_VAR\n\nrtBox(CLK := bSensor);\nIF rtBox.Q THEN\n  nBoxes := nBoxes + 1;\nEND_IF"
+  },
+  {
+   "t": "Interlocking",
+   "c": "<p>An interlock blocks unsafe or conflicting actions. Forward and reverse must never be on together, and a press may only run when its guard is closed. Interlocks are conditions ANDed into outputs.</p><p>Remember: program interlocks do not replace safety hardware. Emergency stops use safety-rated devices.</p>",
+   "x": "A reversing conveyor cannot start forward while the reverse output is on.",
+   "ex": "List two interlocks for a machine with a sliding guard door.",
+   "q": [
+    [
+     "An interlock:",
+     [
+      "Speeds up the machine",
+      "Prevents unsafe or conflicting actions",
+      "Counts items"
+     ],
+     1,
+     "It blocks bad combinations."
+    ],
+    [
+     "Forward and reverse together should be:",
+     [
+      "Allowed",
+      "Counted",
+      "Prevented"
+     ],
+     2,
+     "Both on could damage the machine."
+    ],
+    [
+     "Interlocks are written as:",
+     [
+      "Extra conditions on outputs",
+      "Comments",
+      "Timers only"
+     ],
+     0,
+     "AND NOT conditions on the output."
+    ],
+    [
+     "An emergency stop should rely on:",
+     [
+      "Normal PLC logic only",
+      "Safety-rated hardware",
+      "A timer"
+     ],
+     1,
+     "Safety functions need certified devices."
+    ],
+    [
+     "A guard door open should:",
+     [
+      "Be ignored",
+      "Start the machine",
+      "Stop or block the hazard"
+     ],
+     2,
+     "That is the purpose of a guard interlock."
+    ]
+   ],
+   "code": "bFwd := bFwdCmd AND NOT bRev AND bGuardClosed;\nbRev := bRevCmd AND NOT bFwd AND bGuardClosed;"
+  },
+  {
+   "t": "Sequence control",
+   "c": "<p>Many machines run in steps. A state machine stores the current step in a variable and uses CASE. Each step does its actions and moves on when its transition condition is TRUE.</p>",
+   "x": "A tank fill cycle: 0 idle, 1 fill, 2 mix, 3 drain.",
+   "ex": "Draw the step diagram for a wash cycle with fill, wash and drain.",
+   "q": [
+    [
+     "A state machine stores:",
+     [
+      "The current step",
+      "The user name",
+      "The screen size"
+     ],
+     0,
+     "One variable tracks the step."
+    ],
+    [
+     "Steps usually change when:",
+     [
+      "Randomly",
+      "A transition condition is TRUE",
+      "Every hour"
+     ],
+     1,
+     "Transitions drive the sequence."
+    ],
+    [
+     "A good structure is:",
+     [
+      "Many unrelated IFs",
+      "A FOR loop",
+      "CASE on the step number"
+     ],
+     2,
+     "CASE maps each step to its actions."
+    ],
+    [
+     "Step 0 is often:",
+     [
+      "Idle",
+      "Fault only",
+      "Delete"
+     ],
+     0,
+     "It is the safe starting state."
+    ],
+    [
+     "In the code, step 2 starts when:",
+     [
+      "The motor is off",
+      "The tank is full",
+      "Start is released"
+     ],
+     1,
+     "nStep moves on bFull."
+    ]
+   ],
+   "code": "CASE nStep OF\n  0: IF bStart THEN nStep := 1; END_IF\n  1: bFill := TRUE;\n     IF bFull THEN bFill := FALSE; nStep := 2; END_IF\n  2: bMix := TRUE;\nEND_CASE"
+  },
+  {
+   "t": "Conveyor applications",
+   "c": "<p>Conveyor logic typically starts from the discharge end first so items do not pile up, uses photoelectric sensors for presence, and runs on for a few seconds after stop to clear the belt.</p>",
+   "x": "Three belts start in order: discharge, middle, then feed, each after a short delay.",
+   "ex": "Plan the start order and delays for three belts.",
+   "q": [
+    [
+     "Belts usually start from:",
+     [
+      "The feed end first",
+      "Random order",
+      "The discharge end first"
+     ],
+     2,
+     "Downstream first avoids pile-ups."
+    ],
+    [
+     "A run-on timer after stop:",
+     [
+      "Clears the belt",
+      "Adds items",
+      "Resets the program"
+     ],
+     0,
+     "It lets items leave the belt."
+    ],
+    [
+     "Presence on a belt is detected by a:",
+     [
+      "Timer",
+      "Photoelectric sensor",
+      "Counter value"
+     ],
+     1,
+     "Sensors detect objects."
+    ],
+    [
+     "Counting items on a belt needs:",
+     [
+      "No inputs",
+      "A fault",
+      "Edge detection"
+     ],
+     2,
+     "So each item counts once."
+    ],
+    [
+     "A jam is suspected when:",
+     [
+      "A sensor stays on too long",
+      "The belt is empty",
+      "A button is released"
+     ],
+     0,
+     "A blocked sensor signals a stuck item."
+    ]
+   ]
+  }
  ]
 }

@@ -1,9 +1,181 @@
 {
  "title": "Module 5: Timers and counters",
- "soon": true,
- "topics": [
-  "TON, TOF and TP",
-  "CTU and CTD",
-  "Practical timing applications"
+ "lessons": [
+  {
+   "t": "TON, TOF and TP timers",
+   "c": "<p>TON is an on-delay: output Q turns on after input IN has been TRUE for the preset time PT. TOF is an off-delay: Q stays on for PT after IN goes FALSE. TP makes a fixed-length pulse when IN rises.</p><p>ET shows the elapsed time. Timers are function blocks, so each needs its own instance.</p>",
+   "x": "A TON starts the conveyor 3 seconds after the warning horn begins.",
+   "ex": "Write down what a TOF with PT of 5 seconds does to a fan after the machine stops.",
+   "q": [
+    [
+     "A TON output turns on:",
+     [
+      "After IN has been TRUE for PT",
+      "As soon as IN is TRUE",
+      "When IN goes FALSE"
+     ],
+     0,
+     "On-delay waits for PT. If IN drops early, it resets."
+    ],
+    [
+     "A TOF keeps its output on:",
+     [
+      "Only while IN is TRUE",
+      "For PT after IN goes FALSE",
+      "Never"
+     ],
+     1,
+     "Off-delay holds the output after the input drops."
+    ],
+    [
+     "A TP produces:",
+     [
+      "A permanent signal",
+      "A count",
+      "A fixed-length pulse"
+     ],
+     2,
+     "TP gives a pulse of length PT."
+    ],
+    [
+     "ET is the:",
+     [
+      "Elapsed time",
+      "Error type",
+      "External trigger"
+     ],
+     0,
+     "ET shows how long the timer has run."
+    ],
+    [
+     "Each timer needs:",
+     [
+      "To be global only",
+      "Its own instance",
+      "No declaration"
+     ],
+     1,
+     "Timers keep memory, so each is a separate instance."
+    ]
+   ],
+   "code": "VAR\n  tonStart : TON;\n  bStart   : BOOL;\n  bConveyor: BOOL;\nEND_VAR\n\ntonStart(IN := bStart, PT := T#3S);\nIF tonStart.Q THEN\n  bConveyor := TRUE;\nEND_IF"
+  },
+  {
+   "t": "CTU and CTD counters",
+   "c": "<p>CTU counts up on each rising edge of CU and sets Q when the count value CV reaches the preset PV. CTD counts down on each edge of CD and sets Q when CV reaches zero or below.</p><p>RESET clears a CTU. A CTD is filled with PV using its LOAD input.</p>",
+   "x": "Count ten boxes into a carton, then signal that the carton is full.",
+   "ex": "Explain how you would count 24 bottles and then reset for the next crate.",
+   "q": [
+    [
+     "CTU counts:",
+     [
+      "Seconds",
+      "Voltage",
+      "Rising edges on CU"
+     ],
+     2,
+     "It counts each new rising edge."
+    ],
+    [
+     "CTU output Q is TRUE when:",
+     [
+      "CV reaches PV",
+      "CV is zero",
+      "RESET is TRUE only"
+     ],
+     0,
+     "Q shows the preset was reached."
+    ],
+    [
+     "CTD counts:",
+     [
+      "Up",
+      "Down",
+      "Sideways"
+     ],
+     1,
+     "D means down."
+    ],
+    [
+     "RESET on a CTU:",
+     [
+      "Doubles it",
+      "Stops the PLC",
+      "Clears the count"
+     ],
+     2,
+     "Reset sets CV back to zero."
+    ],
+    [
+     "CV is the:",
+     [
+      "Current value",
+      "Cable voltage",
+      "Control variable name only"
+     ],
+     0,
+     "CV is the running count."
+    ]
+   ],
+   "code": "VAR\n  ctuBox : CTU;\n  bSensor, bReset, bFull : BOOL;\nEND_VAR\n\nctuBox(CU := bSensor, RESET := bReset, PV := 10);\nbFull := ctuBox.Q;"
+  },
+  {
+   "t": "Practical timing applications",
+   "c": "<p>Timers solve real problems. A debounce ignores short flickers. A timeout raises an alarm when something takes too long. Two timers can flash a lamp. A start-up delay keeps loads from starting together.</p>",
+   "x": "A sensor must stay on for 200 ms before it counts, which ignores vibration.",
+   "ex": "Design a timeout alarm for a pump that runs 60 seconds without the level changing.",
+   "q": [
+    [
+     "A debounce timer is used to:",
+     [
+      "Speed up a motor",
+      "Ignore short flickers",
+      "Store data"
+     ],
+     1,
+     "It confirms a signal is steady."
+    ],
+    [
+     "A timeout alarm detects:",
+     [
+      "A fast step",
+      "A cable colour",
+      "A step taking too long"
+     ],
+     2,
+     "If time runs out, something is wrong."
+    ],
+    [
+     "A flashing lamp is often built with:",
+     [
+      "Two timers alternating",
+      "A counter only",
+      "A function"
+     ],
+     0,
+     "On and off times each need a timer."
+    ],
+    [
+     "A TON with PT of 200 ms outputs:",
+     [
+      "Immediately",
+      "After 200 ms of steady input",
+      "Never"
+     ],
+     1,
+     "The input must stay TRUE for the full time."
+    ],
+    [
+     "A start-up delay helps by:",
+     [
+      "Increasing voltage",
+      "Removing inputs",
+      "Starting loads one after another"
+     ],
+     2,
+     "It avoids a large combined inrush."
+    ]
+   ]
+  }
  ]
 }
