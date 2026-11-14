@@ -128,12 +128,13 @@ document.getElementById('out').onclick=function(){sb.auth.signOut().then(functio
 
 var NAV=[['courses','Courses'],['learning-paths','Learning paths'],['projects','Projects'],['how-we-teach','How we teach'],['about','About'],['contact','Contact']];
 function nav(){document.getElementById('nav').innerHTML='<a class="logo" href="#home">BrainForging</a>'+NAV.map(function(n){return '<a href="#'+n[0]+'"'+(n[0]===cur?' class="on"':'')+'>'+n[1]+'</a>'}).join('')+(user?'<a class="btn" style="margin:0;padding:8px 16px" href="#dashboard">Dashboard</a>':'<a href="#login">Log in</a><a class="btn" style="margin:0;padding:8px 16px" href="#register">Sign up</a>')}
-function route(){var k=(location.hash||'#home').slice(1);if(!R[k])k='home';var r=R[k];document.title=r.t;
+function route(){var k=(location.hash||'#home').slice(1);if(!R[k])k='home';if(user&&(k==='register'||k==='login')){location.hash='dashboard';return}var r=R[k];document.title=r.t;
 document.getElementById('app').innerHTML=r.h();if(r.i)r.i();
 cur=k;nav();
 window.scrollTo(0,0)}
 document.getElementById('foot').innerHTML='<div class="grid"><div><strong>BrainForging</strong><br>Learn. Practise. Build.<br>Practical engineering education that connects technical knowledge with real-world applications.</div><div><strong>Explore</strong><a href="#courses">Courses</a><a href="#learning-paths">Learning paths</a><a href="#projects">Projects</a><a href="#about">About</a></div><div><strong>Topics</strong><a href="#twincat">TwinCAT 3</a><a href="#courses">PLC programming</a><a href="#projects">Robotics and ROS 2</a></div><div><strong>Support</strong><a href="#contact">Contact</a></div></div>© 2026 BrainForging. All rights reserved.';
-if(sb)sb.auth.onAuthStateChange(function(ev,se){user=se?se.user:null;if(ev==='PASSWORD_RECOVERY'){location.hash='reset'}nav()});
+if(sb)sb.auth.onAuthStateChange(function(ev,se){user=se?se.user:null;if(ev==='PASSWORD_RECOVERY'){location.hash='reset'}else if(user&&(cur==='register'||cur==='login')){location.hash='dashboard'}nav()});
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href="#register"]');if(a&&user){e.preventDefault();location.hash='dashboard'}});
 window.addEventListener('hashchange',route);route();
 </script>
 </body>
