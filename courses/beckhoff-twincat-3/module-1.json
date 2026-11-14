@@ -1,0 +1,296 @@
+{
+ "title": "Module 1: Introduction to PLC and industrial automation",
+ "lessons": [
+  {
+   "t": "What is a PLC?",
+   "c": "<p>A PLC (programmable logic controller) is a rugged industrial computer. It reads inputs, runs a stored program and switches outputs, over and over, many times a second.</p><p>Unlike an office PC, it is built for dust, heat, vibration and electrical noise, and it responds in predictable, repeatable time.</p>",
+   "x": "On a bottling machine, a sensor detects a bottle (input), the program decides the bottle is in position, and the PLC opens the filling valve (output).",
+   "ex": "List three machines you have seen that probably use a PLC. For each, name one input and one output.",
+   "q": [
+    [
+     "What does a PLC do?",
+     [
+      "Only displays graphics",
+      "Reads inputs, runs a program and controls outputs",
+      "Only stores data for reports"
+     ],
+     1,
+     "A PLC reads inputs, executes its program and updates outputs."
+    ],
+    [
+     "Which of these is an input?",
+     [
+      "Indicator lamp",
+      "Motor contactor coil",
+      "Proximity sensor"
+     ],
+     2,
+     "Sensors send signals into the PLC. Lamps and coils are driven by outputs."
+    ],
+    [
+     "Why is a PLC used instead of a normal PC on a machine?",
+     [
+      "It is built for harsh environments and predictable timing",
+      "PCs cannot run programs",
+      "PLCs never need programming"
+     ],
+     0,
+     "Rugged hardware and predictable timing are what industrial control needs."
+    ],
+    [
+     "PLC stands for:",
+     [
+      "Power Line Converter",
+      "Programmable Logic Controller",
+      "Process Load Computer"
+     ],
+     1,
+     "PLC means programmable logic controller."
+    ],
+    [
+     "A push button wired to a PLC is:",
+     [
+      "An input",
+      "An output",
+      "The program"
+     ],
+     0,
+     "A button sends a signal to the PLC, so it is an input."
+    ]
+   ]
+  },
+  {
+   "t": "Why industries use PLCs",
+   "c": "<p>PLCs replaced wall-sized relay panels. Changing the logic no longer means rewiring, you edit the program and download it.</p><p>They are reliable, modular, easy to troubleshoot with online monitoring, and they speak standard industrial networks.</p>",
+   "x": "A factory needs a second conveyor speed. With relays that meant new wiring. With a PLC it is a program change.",
+   "ex": "Write two reasons a factory would choose a PLC over relay logic for a new machine.",
+   "q": [
+    [
+     "A main advantage over relay panels is:",
+     [
+      "No power supply needed",
+      "No sensors needed",
+      "Logic changes by editing the program"
+     ],
+     2,
+     "Editing software is far faster than rewiring."
+    ],
+    [
+     "Online monitoring helps because it lets you:",
+     [
+      "See live values while the machine runs",
+      "Remove the need for testing",
+      "Make the PLC faster"
+     ],
+     0,
+     "Seeing live signals makes faults quicker to find."
+    ],
+    [
+     "Modular I/O means:",
+     [
+      "The program cannot change",
+      "You add input and output cards as the machine grows",
+      "The PLC has no inputs"
+     ],
+     1,
+     "Modules can be added to match the machine."
+    ],
+    [
+     "Adding a new interlock condition is easiest by:",
+     [
+      "Rewiring a relay panel",
+      "Replacing the sensors",
+      "Editing the PLC program"
+     ],
+     2,
+     "An interlock is just more logic in the program."
+    ],
+    [
+     "PLCs suit factories because they are:",
+     [
+      "Rugged and reliable",
+      "Unable to use networks",
+      "Only for home use"
+     ],
+     0,
+     "Reliability in harsh conditions is the main reason."
+    ]
+   ]
+  },
+  {
+   "t": "PLC architecture",
+   "c": "<p>A PLC has a CPU that runs the program, memory, a power supply, input modules, output modules and communication interfaces.</p><p>Input modules turn field signals such as 24 V DC into data. Output modules turn program results into signals that drive actuators. In Beckhoff systems, EtherCAT I/O terminals play this role.</p>",
+   "x": "A limit switch closes, the input terminal reports TRUE, the CPU runs the logic, and an output terminal switches a 24 V relay.",
+   "ex": "Draw a block diagram: sensor, input module, CPU, output module, actuator.",
+   "q": [
+    [
+     "Which part runs the program?",
+     [
+      "Power supply",
+      "Output module",
+      "CPU"
+     ],
+     2,
+     "The CPU executes the program."
+    ],
+    [
+     "Input modules:",
+     [
+      "Convert field signals into data for the CPU",
+      "Drive motors from the program",
+      "Store project backups"
+     ],
+     0,
+     "They bring real-world signals into the PLC."
+    ],
+    [
+     "Which of these is an actuator?",
+     [
+      "Limit switch",
+      "Photoelectric sensor",
+      "Solenoid valve"
+     ],
+     2,
+     "An actuator is driven by an output and acts on the process."
+    ],
+    [
+     "Output modules:",
+     [
+      "Read sensors",
+      "Send CPU results out to actuators",
+      "Only power the CPU"
+     ],
+     1,
+     "They convert program results into real signals."
+    ],
+    [
+     "Beckhoff I/O terminals typically connect over:",
+     [
+      "EtherCAT",
+      "Bluetooth",
+      "A USB stick"
+     ],
+     0,
+     "EtherCAT is Beckhoff’s fieldbus."
+    ]
+   ]
+  },
+  {
+   "t": "The PLC scan cycle",
+   "c": "<p>A PLC repeats a loop forever: read inputs, run the program, write outputs, then housekeeping and communication. One pass is a scan, often a few milliseconds.</p><p>Because the whole program runs each cycle, a signal shorter than the scan can be missed, and outputs only change at the end of the scan.</p>",
+   "x": "A conveyor sensor sees a box. On the next scan the program reads TRUE and the diverter output is set at the end of that scan.",
+   "code": "PROGRAM MAIN\nVAR\n  bSensor   : BOOL;   // input\n  bDiverter : BOOL;   // output\n  nScans    : UDINT;\nEND_VAR\n\nnScans := nScans + 1;  // runs once every scan\nbDiverter := bSensor;",
+   "ex": "In TwinCAT online mode, watch nScans for ten seconds and estimate how many scans happen per second.",
+   "q": [
+    [
+     "What is the correct scan order?",
+     [
+      "Write outputs, read inputs, run program",
+      "Run program, read inputs, stop",
+      "Read inputs, run program, write outputs"
+     ],
+     2,
+     "Inputs are read first, then logic runs, then outputs are written."
+    ],
+    [
+     "How often does the scan repeat?",
+     [
+      "Once at start-up",
+      "Continuously while running",
+      "Only on a button press"
+     ],
+     1,
+     "The scan loops for as long as the PLC runs."
+    ],
+    [
+     "A pulse much shorter than the scan time may be:",
+     [
+      "Missed",
+      "Stored forever",
+      "Doubled"
+     ],
+     0,
+     "If it starts and ends between two reads, the PLC never sees it."
+    ],
+    [
+     "In the code above, nScans increases:",
+     [
+      "Only when bSensor is TRUE",
+      "Once per scan",
+      "Once per hour"
+     ],
+     1,
+     "The program body executes once each scan."
+    ],
+    [
+     "Scan time is the time for:",
+     [
+      "Booting the PC",
+      "Downloading a project",
+      "One full pass through the cycle"
+     ],
+     2,
+     "It is the duration of one complete loop."
+    ]
+   ]
+  },
+  {
+   "t": "Real-world automation applications",
+   "c": "<p>PLCs run packaging lines, conveyors, pumping stations, robot cells, lifts and process plants.</p><p>The pattern is the same everywhere: sense the process, decide with logic, act on the process, and report to operators.</p>",
+   "x": "In a water tank, a level sensor starts the pump at low level and stops it at high level, with an alarm if it runs too long.",
+   "ex": "Pick a machine you know. Write its inputs, its outputs and one rule such as IF low level THEN pump ON.",
+   "q": [
+    [
+     "Which is a typical PLC application?",
+     [
+      "Editing photos",
+      "Writing a novel",
+      "Conveyor sorting"
+     ],
+     2,
+     "Conveyors and sorting are classic PLC jobs."
+    ],
+    [
+     "The basic control pattern is:",
+     [
+      "Sense, decide, act",
+      "Print, copy, paste",
+      "Sleep, wake, repeat"
+     ],
+     0,
+     "Inputs sense, logic decides, outputs act."
+    ],
+    [
+     "In the water tank, the level sensor is:",
+     [
+      "An output",
+      "An input",
+      "The pump"
+     ],
+     1,
+     "It sends a signal into the PLC."
+    ],
+    [
+     "The pump is driven by:",
+     [
+      "A sensor",
+      "The power supply label",
+      "An output"
+     ],
+     2,
+     "Actuators such as pumps are driven by outputs."
+    ],
+    [
+     "An alarm if the pump runs too long is:",
+     [
+      "Extra logic in the program",
+      "Impossible with a PLC",
+      "A new sensor type"
+     ],
+     0,
+     "Alarms and timeouts are just more program logic."
+    ]
+   ]
+  }
+ ]
+}

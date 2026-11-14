@@ -1,0 +1,11 @@
+{
+ "title": "Module 6: Practical PLC applications",
+ "soon": true,
+ "topics": [
+  "Motor control",
+  "Sensor logic",
+  "Interlocking",
+  "Sequence control",
+  "Conveyor applications"
+ ]
+}

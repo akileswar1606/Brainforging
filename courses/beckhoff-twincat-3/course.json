@@ -1,0 +1,14 @@
+{
+ "id": "twincat-3",
+ "title": "Beckhoff TwinCAT 3 \u2013 PLC Programming Fundamentals",
+ "modules": [
+  "module-1.json",
+  "module-2.json",
+  "module-3.json",
+  "module-4.json",
+  "module-5.json",
+  "module-6.json",
+  "module-7.json",
+  "module-8.json"
+ ]
+}

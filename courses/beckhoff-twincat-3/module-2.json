@@ -1,0 +1,238 @@
+{
+ "title": "Module 2: Getting started with TwinCAT 3",
+ "lessons": [
+  {
+   "t": "Introduction to Beckhoff TwinCAT",
+   "c": "<p>TwinCAT turns a standard Windows PC or Beckhoff industrial PC into a real-time controller. It runs PLC, motion and other modules in one real-time runtime.</p><p>Its PLC follows the IEC 61131-3 standard, and it talks to I/O mainly over EtherCAT.</p>",
+   "x": "One industrial PC runs the conveyor logic and the servo motion together, in sync over EtherCAT.",
+   "ex": "Find the Beckhoff TwinCAT product page and list two functions besides PLC.",
+   "q": [
+    [
+     "TwinCAT is:",
+     [
+      "Software that turns a PC into a real-time controller",
+      "A hardware relay",
+      "A spreadsheet program"
+     ],
+     0,
+     "TwinCAT is Beckhoff’s PC-based control software."
+    ],
+    [
+     "The TwinCAT PLC follows:",
+     [
+      "ISO 9001 only",
+      "IEC 61131-3",
+      "IEC 60320"
+     ],
+     1,
+     "IEC 61131-3 defines the PLC languages."
+    ],
+    [
+     "Besides PLC, TwinCAT can run:",
+     [
+      "Video editing",
+      "Word processing",
+      "Motion control"
+     ],
+     2,
+     "Motion is a core TwinCAT function."
+    ],
+    [
+     "Beckhoff’s main fieldbus is:",
+     [
+      "EtherCAT",
+      "Bluetooth",
+      "USB"
+     ],
+     0,
+     "EtherCAT connects Beckhoff I/O and drives."
+    ],
+    [
+     "Real-time means:",
+     [
+      "Using the internet",
+      "Responses within guaranteed time limits",
+      "Running very fast only"
+     ],
+     1,
+     "Predictable timing is what makes it real-time."
+    ]
+   ]
+  },
+  {
+   "t": "The development environment",
+   "c": "<p>The TwinCAT 3 engineering environment is called XAE (eXtended Automation Engineering) and is built on Microsoft Visual Studio.</p><p>The Solution Explorer shows a tree with SYSTEM, MOTION, PLC, SAFETY, C++ and I/O. PLC code lives under PLC, and hardware devices under I/O.</p>",
+   "x": "You add an EtherCAT device under I/O, then link its input terminal to a PLC variable.",
+   "ex": "Open XAE, expand every tree node and write what you think each one is for.",
+   "q": [
+    [
+     "Code for the PLC is written under:",
+     [
+      "The I/O node",
+      "The SAFETY node",
+      "The PLC node"
+     ],
+     2,
+     "The PLC node holds PLC projects."
+    ],
+    [
+     "Hardware devices are configured under:",
+     [
+      "I/O",
+      "PLC",
+      "MOTION"
+     ],
+     0,
+     "The I/O node holds fieldbus devices and terminals."
+    ],
+    [
+     "XAE stands for:",
+     [
+      "eXternal Auto Editor",
+      "eXtended Automation Engineering",
+      "eXact Analog Equipment"
+     ],
+     1,
+     "XAE is the engineering environment."
+    ],
+    [
+     "XAE is built on:",
+     [
+      "A web browser",
+      "Excel",
+      "Microsoft Visual Studio"
+     ],
+     2,
+     "TwinCAT 3 uses Visual Studio as its shell."
+    ],
+    [
+     "The Solution Explorer shows:",
+     [
+      "The project tree",
+      "Only error messages",
+      "Live video"
+     ],
+     0,
+     "It is the tree of the whole project."
+    ]
+   ]
+  },
+  {
+   "t": "Creating a PLC project",
+   "c": "<p>In XAE create a new TwinCAT XAE project, then right-click PLC and add a new PLC project. It creates a POUs folder with a MAIN program and a task that calls MAIN every cycle.</p><p>POU means Program Organization Unit: a program, function or function block.</p>",
+   "x": "MAIN is the entry point of your machine program, called again and again by the task.",
+   "ex": "Create a PLC project named FirstMachine and build it with no errors.",
+   "q": [
+    [
+     "MAIN is:",
+     [
+      "A hardware module",
+      "The program called every cycle",
+      "A library"
+     ],
+     1,
+     "The task calls MAIN each cycle."
+    ],
+    [
+     "POU stands for:",
+     [
+      "Power Output Unit",
+      "Portable Operator Unit",
+      "Program Organization Unit"
+     ],
+     2,
+     "A POU is a program, function or function block."
+    ],
+    [
+     "Building a project checks for:",
+     [
+      "Errors in your code",
+      "Network speed",
+      "Battery level"
+     ],
+     0,
+     "Build compiles and reports errors."
+    ],
+    [
+     "A new PLC project is added under:",
+     [
+      "The SAFETY node",
+      "The PLC node",
+      "The C++ node"
+     ],
+     1,
+     "Right-click PLC, then add."
+    ],
+    [
+     "A task is used to:",
+     [
+      "Draw the screen",
+      "Store passwords",
+      "Run the PLC program cycle after cycle"
+     ],
+     2,
+     "Tasks schedule PLC execution."
+    ]
+   ],
+   "code": "PROGRAM MAIN\nVAR\n  bRun : BOOL;\nEND_VAR\n\nbRun := TRUE;"
+  },
+  {
+   "t": "Runtime and PLC configuration",
+   "c": "<p>The runtime (XAR) executes your PLC on the target device. You choose the target system, activate the configuration, then log in to the PLC and start it.</p><p>The PLC task has a cycle time, such as 10 ms, and a priority.</p>",
+   "x": "A 10 ms cycle time means MAIN runs 100 times a second.",
+   "ex": "Set a task cycle time of 10 ms and work out how many scans happen per second.",
+   "q": [
+    [
+     "XAR is the:",
+     [
+      "Runtime that executes the PLC",
+      "Drawing tool",
+      "Documentation viewer"
+     ],
+     0,
+     "XAR is the eXtended Automation Runtime."
+    ],
+    [
+     "A 10 ms cycle time gives how many runs per second?",
+     [
+      "10",
+      "100",
+      "1000"
+     ],
+     1,
+     "1000 ms divided by 10 ms is 100."
+    ],
+    [
+     "Logging in to the PLC:",
+     [
+      "Deletes the project",
+      "Turns off the PC",
+      "Connects to the running PLC on the target"
+     ],
+     2,
+     "Login connects you to monitor and control it."
+    ],
+    [
+     "Activating the configuration:",
+     [
+      "Sends the configuration to the target",
+      "Prints the code",
+      "Updates Windows"
+     ],
+     0,
+     "It loads your settings onto the target."
+    ],
+    [
+     "The runtime must be running to:",
+     [
+      "Edit code offline",
+      "Execute the PLC program",
+      "Change fonts"
+     ],
+     1,
+     "The PLC only executes while the runtime runs it."
+    ]
+   ]
+  }
+ ]
+}

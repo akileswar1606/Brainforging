@@ -1,0 +1,300 @@
+{
+ "title": "Module 3: Structured Text programming",
+ "lessons": [
+  {
+   "t": "Variables and data types",
+   "c": "<p>Variables store values. You declare them in a VAR block with a type. Common types are BOOL (TRUE or FALSE), INT (whole numbers), DINT (bigger whole numbers), REAL (decimals), STRING and TIME.</p>",
+   "x": "bMotorOn is a BOOL, nCount an INT, and rTemp a REAL that holds 21.5 degrees.",
+   "ex": "Declare variables for a tank: pump state, level in percent and a tank name.",
+   "q": [
+    [
+     "A BOOL holds:",
+     [
+      "Decimals",
+      "Text",
+      "TRUE or FALSE"
+     ],
+     2,
+     "BOOL is a two-state value."
+    ],
+    [
+     "Best type for a temperature like 21.5:",
+     [
+      "REAL",
+      "BOOL",
+      "TIME"
+     ],
+     0,
+     "REAL stores decimal numbers."
+    ],
+    [
+     "Variables are declared inside:",
+     [
+      "IF and END_IF",
+      "VAR and END_VAR",
+      "CASE and END_CASE"
+     ],
+     1,
+     "VAR blocks hold declarations."
+    ],
+    [
+     "T#2S is a literal for:",
+     [
+      "2 samples",
+      "Text 2S",
+      "2 seconds"
+     ],
+     2,
+     "T# marks a TIME literal."
+    ],
+    [
+     "An INT is for:",
+     [
+      "Whole numbers",
+      "Names",
+      "Colors"
+     ],
+     0,
+     "INT stores whole numbers."
+    ]
+   ],
+   "code": "VAR\n  bMotorOn : BOOL := FALSE;\n  nCount   : INT := 0;\n  rTemp    : REAL := 21.5;\n  tDelay   : TIME := T#2S;\nEND_VAR"
+  },
+  {
+   "t": "Operators and expressions",
+   "c": "<p>Assign with :=. Arithmetic uses + - * /. Comparison uses = <> < > <= >=. Logic uses AND, OR, NOT and XOR.</p><p>Multiplication happens before addition, and parentheses make your intent clear.</p>",
+   "x": "An alarm is raised when temperature is above 80 and the alarm is not muted.",
+   "ex": "Write an expression that is TRUE when level is below 20 or Stop is pressed.",
+   "q": [
+    [
+     "The assignment operator is:",
+     [
+      "==",
+      ":=",
+      "=>"
+     ],
+     1,
+     "ST assigns with :=."
+    ],
+    [
+     "Not equal is written:",
+     [
+      "!=",
+      "=/=",
+      "&lt;&gt;"
+     ],
+     2,
+     "ST uses &lt;&gt; for not equal."
+    ],
+    [
+     "A AND B is TRUE when:",
+     [
+      "Both are TRUE",
+      "Either is TRUE",
+      "Both are FALSE"
+     ],
+     0,
+     "AND needs both."
+    ],
+    [
+     "What is 5 + 2 * 3?",
+     [
+      "21",
+      "11",
+      "10"
+     ],
+     1,
+     "Multiplication is done first."
+    ],
+    [
+     "NOT TRUE equals:",
+     [
+      "TRUE",
+      "0 or 1",
+      "FALSE"
+     ],
+     2,
+     "NOT flips the value."
+    ]
+   ],
+   "code": "bAlarm := (rTemp > 80.0) AND NOT bMuted;"
+  },
+  {
+   "t": "IF and ELSE statements",
+   "c": "<p>IF runs code only when a condition is TRUE. Add ELSIF for more conditions and ELSE for everything else. End the block with END_IF.</p>",
+   "x": "Start the pump at low level and stop it at high level.",
+   "ex": "Add an ELSE that raises an alarm when the sensor value is out of range.",
+   "q": [
+    [
+     "An IF block ends with:",
+     [
+      "END_IF",
+      "END_WHILE",
+      "STOP"
+     ],
+     0,
+     "Every IF closes with END_IF."
+    ],
+    [
+     "Code in ELSE runs when:",
+     [
+      "Always",
+      "No earlier condition was TRUE",
+      "Never"
+     ],
+     1,
+     "ELSE is the fallback."
+    ],
+    [
+     "ELSIF is:",
+     [
+      "A loop",
+      "A comment",
+      "A further condition checked if the earlier ones are FALSE"
+     ],
+     2,
+     "It chains conditions."
+    ],
+    [
+     "In the code above with rLevel = 50, the pump:",
+     [
+      "Keeps its previous state",
+      "Turns on",
+      "Turns off"
+     ],
+     0,
+     "Neither condition is TRUE, so nothing changes."
+    ],
+    [
+     "An IF condition must be:",
+     [
+      "A string",
+      "A BOOL expression",
+      "A comment"
+     ],
+     1,
+     "Conditions evaluate to TRUE or FALSE."
+    ]
+   ],
+   "code": "IF rLevel < 20.0 THEN\n  bPump := TRUE;\nELSIF rLevel > 80.0 THEN\n  bPump := FALSE;\nEND_IF"
+  },
+  {
+   "t": "CASE statements",
+   "c": "<p>CASE chooses code by the value of an integer or enumeration. Each branch lists a value, and ELSE catches anything unmatched. It is ideal for state machines.</p>",
+   "x": "A machine has states: 0 idle, 1 running, 2 fault.",
+   "ex": "Add a state 3 for maintenance mode.",
+   "q": [
+    [
+     "CASE selects code by:",
+     [
+      "The time of day",
+      "File size",
+      "The value of a variable"
+     ],
+     2,
+     "It branches on a value."
+    ],
+    [
+     "Unmatched values go to:",
+     [
+      "ELSE",
+      "END_IF",
+      "RETURN"
+     ],
+     0,
+     "ELSE inside CASE is the default."
+    ],
+    [
+     "CASE suits:",
+     [
+      "Drawing",
+      "State machines",
+      "Networking only"
+     ],
+     1,
+     "States map neatly to values."
+    ],
+    [
+     "A CASE block ends with:",
+     [
+      "END_IF",
+      "END_FOR",
+      "END_CASE"
+     ],
+     2,
+     "Each CASE needs END_CASE."
+    ],
+    [
+     "In the code, nState = 1 means:",
+     [
+      "Running",
+      "Idle",
+      "Fault"
+     ],
+     0,
+     "Branch 1 sets bRun TRUE."
+    ]
+   ],
+   "code": "CASE nState OF\n  0: bRun := FALSE;\n  1: bRun := TRUE;\n  2: bAlarm := TRUE;\nELSE\n  bAlarm := TRUE;\nEND_CASE"
+  },
+  {
+   "t": "FOR and WHILE loops",
+   "c": "<p>FOR repeats a known number of times using a counter. WHILE repeats as long as a condition is TRUE.</p><p>The whole loop runs inside one scan, so keep loops short. An endless loop freezes the PLC cycle.</p>",
+   "x": "Add up ten sensor readings stored in an array.",
+   "ex": "Write a FOR loop that adds the numbers 1 to 5.",
+   "q": [
+    [
+     "FOR is best when:",
+     [
+      "You never want to stop",
+      "You know how many repeats",
+      "You need a state"
+     ],
+     1,
+     "FOR uses a counter."
+    ],
+    [
+     "WHILE repeats:",
+     [
+      "Exactly ten times",
+      "Never",
+      "While its condition is TRUE"
+     ],
+     2,
+     "WHILE checks the condition each pass."
+    ],
+    [
+     "An endless loop in a PLC:",
+     [
+      "Freezes the scan cycle",
+      "Is harmless",
+      "Speeds up the PLC"
+     ],
+     0,
+     "The cycle cannot finish."
+    ],
+    [
+     "A FOR loop ends with:",
+     [
+      "END_IF",
+      "END_FOR",
+      "END_VAR"
+     ],
+     1,
+     "FOR closes with END_FOR."
+    ],
+    [
+     "Loops run:",
+     [
+      "Across many scans automatically",
+      "Only offline",
+      "Within a single scan"
+     ],
+     2,
+     "The whole loop executes in one pass."
+    ]
+   ],
+   "code": "FOR i := 1 TO 10 DO\n  nSum := nSum + i;\nEND_FOR"
+  }
+ ]
+}

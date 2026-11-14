@@ -1,0 +1,300 @@
+{
+ "title": "Module 4: PLC program architecture",
+ "lessons": [
+  {
+   "t": "Programs",
+   "c": "<p>A PROGRAM is a POU whose variables keep their values between cycles. A task calls it every cycle. MAIN is the usual top-level program, and it can call other programs.</p>",
+   "x": "MAIN calls ConveyorControl and AlarmHandling each cycle.",
+   "ex": "Split a sketch machine into two programs and decide what MAIN calls.",
+   "q": [
+    [
+     "A PROGRAM’s variables:",
+     [
+      "Keep values between cycles",
+      "Reset every scan",
+      "Cannot be changed"
+     ],
+     0,
+     "Programs have memory."
+    ],
+    [
+     "Programs are called by:",
+     [
+      "A mouse click",
+      "A task",
+      "A battery"
+     ],
+     1,
+     "Tasks schedule programs."
+    ],
+    [
+     "MAIN usually:",
+     [
+      "Is a hardware part",
+      "Is optional in all cases",
+      "Calls other programs"
+     ],
+     2,
+     "It is the top-level entry."
+    ],
+    [
+     "Splitting a machine into programs helps:",
+     [
+      "Keep code organised",
+      "Remove inputs",
+      "Slow it down"
+     ],
+     0,
+     "Structure makes code readable."
+    ],
+    [
+     "A program is a kind of:",
+     [
+      "Sensor",
+      "POU",
+      "Cable"
+     ],
+     1,
+     "POU covers programs, functions and function blocks."
+    ]
+   ],
+   "code": "PROGRAM MAIN\nConveyorControl();\nAlarmHandling();"
+  },
+  {
+   "t": "Functions",
+   "c": "<p>A FUNCTION returns one value and has no memory, so the same inputs always give the same output. It is ideal for calculations such as scaling.</p>",
+   "x": "Convert a raw sensor count into millimetres.",
+   "ex": "Write a function that converts Celsius to Fahrenheit.",
+   "q": [
+    [
+     "A function:",
+     [
+      "Remembers its state",
+      "Runs on its own",
+      "Has no memory between calls"
+     ],
+     2,
+     "Functions are stateless."
+    ],
+    [
+     "A function returns:",
+     [
+      "One value",
+      "Many tasks",
+      "A cable"
+     ],
+     0,
+     "It returns a single result."
+    ],
+    [
+     "Same inputs to a function give:",
+     [
+      "Random output",
+      "The same output",
+      "No output"
+     ],
+     1,
+     "It is deterministic."
+    ],
+    [
+     "Good use for a function:",
+     [
+      "Remembering a counter",
+      "Running a timer",
+      "Scaling a value"
+     ],
+     2,
+     "Counters and timers need memory."
+    ],
+    [
+     "Inputs are declared in:",
+     [
+      "VAR_INPUT",
+      "VAR_GLOBAL",
+      "END_VAR only"
+     ],
+     0,
+     "VAR_INPUT holds inputs."
+    ]
+   ],
+   "code": "FUNCTION F_Scale : REAL\nVAR_INPUT\n  rIn   : REAL;\n  rGain : REAL;\nEND_VAR\n\nF_Scale := rIn * rGain;"
+  },
+  {
+   "t": "Function blocks",
+   "c": "<p>A FUNCTION_BLOCK has inputs, outputs and its own memory. You create instances of it, and each instance keeps its own data, like one object per motor.</p>",
+   "x": "FB_Motor gets three instances: one each for the three conveyor motors.",
+   "ex": "Sketch the inputs and outputs of a FB_Valve block.",
+   "q": [
+    [
+     "A function block keeps:",
+     [
+      "Nothing",
+      "Its own data per instance",
+      "Only constants"
+     ],
+     1,
+     "Instances have memory."
+    ],
+    [
+     "An instance is:",
+     [
+      "A cable",
+      "A library",
+      "A copy of the block with its own data"
+     ],
+     2,
+     "Each instance is separate."
+    ],
+    [
+     "FB_Motor reused for three motors means:",
+     [
+      "Three instances",
+      "One shared motor",
+      "No reuse"
+     ],
+     0,
+     "Create one instance per motor."
+    ],
+    [
+     "Timers like TON are:",
+     [
+      "Functions",
+      "Function blocks",
+      "Variables types only"
+     ],
+     1,
+     "They need memory, so they are function blocks."
+    ],
+    [
+     "Outputs are declared in:",
+     [
+      "VAR_INPUT",
+      "TYPE",
+      "VAR_OUTPUT"
+     ],
+     2,
+     "VAR_OUTPUT holds outputs."
+    ]
+   ],
+   "code": "FUNCTION_BLOCK FB_Motor\nVAR_INPUT  bStart : BOOL; END_VAR\nVAR_OUTPUT bRunning : BOOL; END_VAR\n\nbRunning := bStart;"
+  },
+  {
+   "t": "Global variable lists",
+   "c": "<p>A GVL declares variables that are shared across the whole project, inside VAR_GLOBAL. You access them as GVL_Name.Variable.</p><p>Use them sparingly, for things like I/O and shared status.</p>",
+   "x": "GVL_IO holds every sensor and valve so any program can read them.",
+   "ex": "Create a GVL_IO and move one input into it.",
+   "q": [
+    [
+     "GVL stands for:",
+     [
+      "Global Variable List",
+      "General Value Link",
+      "Grid Voltage Level"
+     ],
+     0,
+     "A GVL is a list of global variables."
+    ],
+    [
+     "A GVL uses:",
+     [
+      "VAR_INPUT",
+      "VAR_GLOBAL",
+      "VAR_OUTPUT"
+     ],
+     1,
+     "Globals are declared in VAR_GLOBAL."
+    ],
+    [
+     "You access a GVL variable by:",
+     [
+      "bStart.GVL_IO",
+      "GVL_IO(bStart)",
+      "GVL_IO.bStart"
+     ],
+     2,
+     "Use the list name, a dot, then the variable."
+    ],
+    [
+     "Global variables are visible to:",
+     [
+      "The whole project",
+      "Only one function",
+      "Nobody"
+     ],
+     0,
+     "That is what global means."
+    ],
+    [
+     "Overusing globals can:",
+     [
+      "Remove all bugs",
+      "Make code hard to track",
+      "Speed up the CPU"
+     ],
+     1,
+     "Shared data makes dependencies unclear."
+    ]
+   ],
+   "code": "VAR_GLOBAL\n  bStart : BOOL;\n  bLamp  : BOOL;\nEND_VAR"
+  },
+  {
+   "t": "Reusable programming structures",
+   "c": "<p>Group related data with STRUCT, name states with ENUM, and build libraries of function blocks. Reuse cuts bugs and makes new machines faster to build.</p>",
+   "x": "A ST_Motor struct holds start, running and fault flags in one tidy variable.",
+   "ex": "Define a struct for a valve with open, closed and fault flags.",
+   "q": [
+    [
+     "A STRUCT:",
+     [
+      "Is a loop",
+      "Is a timer",
+      "Groups related variables"
+     ],
+     2,
+     "Structures bundle data."
+    ],
+    [
+     "An ENUM is used to:",
+     [
+      "Name states",
+      "Add numbers",
+      "Draw lines"
+     ],
+     0,
+     "Enums give readable names to values."
+    ],
+    [
+     "Reuse helps by:",
+     [
+      "Increasing code size",
+      "Cutting bugs and build time",
+      "Removing tasks"
+     ],
+     1,
+     "Tested blocks are reliable."
+    ],
+    [
+     "A library holds:",
+     [
+      "Only comments",
+      "Hardware",
+      "Reusable blocks and functions"
+     ],
+     2,
+     "Libraries package reusable code."
+    ],
+    [
+     "ST_Motor above bundles:",
+     [
+      "Flags for one motor",
+      "All machines",
+      "A timer"
+     ],
+     0,
+     "It groups that motor’s data."
+    ]
+   ],
+   "code": "TYPE ST_Motor :\nSTRUCT\n  bStart   : BOOL;\n  bRunning : BOOL;\n  bFault   : BOOL;\nEND_STRUCT\nEND_TYPE"
+  }
+ ]
+}
