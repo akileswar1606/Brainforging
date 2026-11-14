@@ -1,14 +1,99 @@
 {
  "id": "twincat-3",
- "title": "Beckhoff TwinCAT 3 \u2013 PLC Programming Fundamentals",
+ "title": "Beckhoff TwinCAT 3 & EtherCAT – PLC Programming Fundamentals",
  "modules": [
-  "module-1.json",
-  "module-2.json",
-  "module-3.json",
-  "module-4.json",
-  "module-5.json",
-  "module-6.json",
-  "module-7.json",
-  "module-8.json"
+  {
+   "file": "module-1.json",
+   "title": "Module 1: Introduction to PLC and industrial automation",
+   "free": true,
+   "lessons": [
+    "What is a PLC?",
+    "Why industries use PLCs",
+    "PLC architecture",
+    "The PLC scan cycle",
+    "Real-world automation applications"
+   ]
+  },
+  {
+   "file": "module-2.json",
+   "title": "Module 2: Getting started with TwinCAT 3",
+   "free": false,
+   "lessons": [
+    "Introduction to Beckhoff TwinCAT",
+    "The development environment",
+    "Creating a PLC project",
+    "Runtime and PLC configuration"
+   ]
+  },
+  {
+   "file": "module-3.json",
+   "title": "Module 3: Structured Text programming",
+   "free": false,
+   "lessons": [
+    "Variables and data types",
+    "Operators and expressions",
+    "IF and ELSE statements",
+    "CASE statements",
+    "FOR and WHILE loops"
+   ]
+  },
+  {
+   "file": "module-4.json",
+   "title": "Module 4: PLC program architecture",
+   "free": false,
+   "lessons": [
+    "Programs",
+    "Functions",
+    "Function blocks",
+    "Global variable lists",
+    "Reusable programming structures"
+   ]
+  },
+  {
+   "file": "module-5.json",
+   "title": "Module 5: Timers and counters",
+   "free": false,
+   "lessons": [
+    "TON, TOF and TP timers",
+    "CTU and CTD counters",
+    "Practical timing applications"
+   ]
+  },
+  {
+   "file": "module-6.json",
+   "title": "Module 6: Practical PLC applications",
+   "free": false,
+   "lessons": [
+    "Motor control",
+    "Sensor logic",
+    "Interlocking",
+    "Sequence control",
+    "Conveyor applications"
+   ]
+  },
+  {
+   "file": "module-7.json",
+   "title": "Module 7: Debugging and troubleshooting",
+   "free": false,
+   "lessons": [
+    "Online monitoring",
+    "Watch windows",
+    "Breakpoints",
+    "Common programming errors",
+    "Troubleshooting techniques"
+   ]
+  },
+  {
+   "file": "module-8.json",
+   "title": "Module 8: Final practical project",
+   "free": false,
+   "lessons": [
+    "Project overview and system design",
+    "Sensor detection and product counting",
+    "Conveyor sequence and sorting logic",
+    "Fault handling",
+    "Final assessment"
+   ]
+  }
  ]
 }

@@ -3,183 +3,76 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>BrainForging | Learn PLC Programming, Automation &amp; Robotics</title>
-<meta name="description" content="Learn PLC programming, industrial automation, TwinCAT 3 and robotics through practical engineering courses, real-world examples, interactive exercises and projects.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500&display=swap">
-<style>
-:root{--bg:#eef1ee;--surf:#fff;--ink:#101820;--mute:#4d5b56;--line:#c9d2cd;--pan:#1f6f5c;--sig:#f2b01e;--onpan:#fff;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0d1512;--surf:#16211d;--ink:#e8efeb;--mute:#9fb0a9;--line:#2c3b36;--pan:#3fae92;--onpan:#07140f}}
-:root[data-theme="dark"]{color-scheme:dark;--bg:#0d1512;--surf:#16211d;--ink:#e8efeb;--mute:#9fb0a9;--line:#2c3b36;--pan:#3fae92;--onpan:#07140f}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,sans-serif}
-h1,h2,h3{font-family:"Bricolage Grotesque","Segoe UI",sans-serif;line-height:1.1;margin:0 0 .5em;letter-spacing:-.02em}
-h1{font-size:clamp(2.3rem,6vw,4.2rem);font-weight:800}h2{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:700}h3{font-size:1.25rem;font-weight:700}
-p{margin:0 0 1em;max-width:68ch}a{color:inherit}
-.w{max-width:1080px;margin:0 auto;padding:0 20px}
-header{border-bottom:1px solid var(--line);background:var(--bg)}
-nav{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;padding:14px 0}
-nav .logo{font:800 1.3rem "Bricolage Grotesque",sans-serif;text-decoration:none;margin-right:auto}
-nav a{text-decoration:none;color:var(--mute);font-size:.95rem;padding:4px 0;border-bottom:2px solid transparent}
-nav a:hover,nav a.on{color:var(--ink);border-color:var(--sig)}
-a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--sig);outline-offset:2px}
-section{padding:56px 0;border-bottom:1px solid var(--line)}
-.btn{display:inline-block;background:var(--pan);color:var(--onpan);font:700 1rem "Bricolage Grotesque",sans-serif;padding:12px 22px;border:0;border-radius:4px;text-decoration:none;cursor:pointer;margin:0 10px 10px 0}
-.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--ink);padding:10px 20px}
-.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
-.card{background:var(--surf);border:1px solid var(--line);border-left:5px solid var(--pan);padding:18px 20px;border-radius:2px}
-.card p{margin:0;color:var(--mute);font-size:.95rem}
-.tag{display:inline-block;font-size:.8rem;background:var(--sig);color:#101820;padding:2px 8px;border-radius:2px;margin-bottom:8px}
-ul.l{padding-left:1.2em;margin:0 0 1em}ul.l li{margin:.3em 0}
-.rung{background:var(--surf);border:1px solid var(--line);padding:18px;margin-top:28px;max-width:680px}
-.rung .row{display:flex;align-items:center;gap:0;margin:14px 0}
-.wire{flex:1;height:3px;background:var(--mute);min-width:14px}.wire.hot{background:var(--sig)}
-.node{border:3px solid var(--mute);padding:6px 10px;font:700 .9rem "Bricolage Grotesque",sans-serif;text-align:center;min-width:64px}
-.node.hot{border-color:var(--sig);background:var(--sig);color:#101820}
-.bar{height:8px;background:var(--line);margin-top:6px}.bar i{display:block;height:100%;width:0;background:var(--pan)}
-.rung small{color:var(--mute)}
-form{display:grid;gap:14px;max-width:520px}
-label{display:grid;gap:4px;font-weight:500;font-size:.95rem}
-input,select,textarea{font:inherit;padding:10px;border:1px solid var(--mute);background:var(--surf);color:var(--ink);border-radius:2px}
-.msg{padding:12px 16px;background:var(--surf);border-left:5px solid var(--sig);max-width:520px;margin-top:14px}
-footer{padding:36px 0;color:var(--mute);font-size:.92rem}
-footer .grid{margin-bottom:20px}footer a{display:block;text-decoration:none;margin:3px 0}
-.mod{border-top:1px solid var(--line);padding:14px 0}.mod h3{margin-bottom:.2em}
-.qf{border:1px solid var(--line);margin:0 0 14px;padding:12px 16px;max-width:640px}.qf legend{font-weight:500;padding:0 6px}.op{display:flex;gap:8px;font-weight:400;margin:4px 0}.ex{font-size:.9rem;color:var(--mute);margin-top:6px}
-pre{background:var(--surf);border:1px solid var(--line);padding:14px;overflow-x:auto;font-size:.9rem;max-width:680px}
-.map{display:flex;flex-direction:column;gap:22px;max-width:520px;margin:24px 0}.lv{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink)}.lv b{width:58px;height:58px;flex:none;border-radius:50%;display:grid;place-items:center;font-size:1.4rem;border:4px solid var(--line);background:var(--surf)}.lv.done b{background:var(--pan);border-color:var(--pan);color:var(--onpan)}.lv.cur b{border-color:var(--sig);background:var(--sig);color:#101820;animation:pulse 1.6s infinite}.lv.lock{opacity:.55;pointer-events:none}.lv:nth-child(even){margin-left:56px}.lv:nth-child(3n){margin-left:28px}
-@keyframes pulse{50%{transform:scale(1.1)}}@keyframes fall{to{transform:translateY(105vh) rotate(360deg)}}
-.cf{position:fixed;top:-30px;font-size:1.4rem;animation:fall 1.8s ease-in forwards;z-index:50;pointer-events:none}
-.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:6px;z-index:60;font-weight:500;max-width:90vw}
-.xp{height:14px;background:var(--line);border-radius:7px;overflow:hidden;max-width:420px}.xp i{display:block;height:100%;background:var(--sig)}
-.bd{display:inline-flex;flex-direction:column;align-items:center;width:112px;text-align:center;font-size:.85rem;margin:0 10px 14px 0}.bd b{font-size:2rem}.bd.off{opacity:.35;filter:grayscale(1)}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-</style>
+<title>Learn Beckhoff TwinCAT 3 &amp; EtherCAT on Your Laptop | BrainForging</title>
+<meta name="description" content="Learn Beckhoff TwinCAT 3 and EtherCAT PLC programming on your Windows laptop with no PLC hardware. 8 modules, 37 lessons with quizzes. Free to start.">
+<link rel="canonical" href="https://akileswar1606.github.io/Brainforging/">
+<meta name="theme-color" content="#F7F6F2">
+<meta property="og:type" content="website"><meta property="og:site_name" content="BrainForging"><meta property="og:title" content="Learn Beckhoff TwinCAT 3 &amp; EtherCAT on Your Laptop | BrainForging"><meta property="og:description" content="Learn Beckhoff TwinCAT 3 and EtherCAT PLC programming on your Windows laptop with no PLC hardware. 8 modules, 37 lessons with quizzes. Free to start."><meta property="og:url" content="https://akileswar1606.github.io/Brainforging/">
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Learn Beckhoff TwinCAT 3 &amp; EtherCAT on Your Laptop | BrainForging"><meta name="twitter:description" content="Learn Beckhoff TwinCAT 3 and EtherCAT PLC programming on your Windows laptop with no PLC hardware. 8 modules, 37 lessons with quizzes. Free to start.">
+<link rel="preconnect" href="https://cnmkusligiirfebtsojy.supabase.co" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500&display=swap" onload="this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500&display=swap"></noscript>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Course", "name": "Beckhoff TwinCAT 3 & EtherCAT – PLC Programming Fundamentals", "description": "Learn Beckhoff TwinCAT 3 and EtherCAT PLC programming on your Windows laptop with no PLC hardware. 8 modules, 37 lessons with quizzes. Free to start.", "url": "https://akileswar1606.github.io/Brainforging/", "inLanguage": "en", "educationalLevel": "Beginner", "teaches": "Beckhoff TwinCAT 3, PLC programming, IEC 61131-3 Structured Text, EtherCAT", "provider": {"@type": "Organization", "name": "BrainForging", "url": "https://akileswar1606.github.io/Brainforging/"}, "syllabusSections": [{"@type": "Syllabus", "name": "Module 1: Introduction to PLC and industrial automation", "description": "What is a PLC?; Why industries use PLCs; PLC architecture; The PLC scan cycle; Real-world automation applications"}, {"@type": "Syllabus", "name": "Module 2: Getting started with TwinCAT 3", "description": "Introduction to Beckhoff TwinCAT; The development environment; Creating a PLC project; Runtime and PLC configuration"}, {"@type": "Syllabus", "name": "Module 3: Structured Text programming", "description": "Variables and data types; Operators and expressions; IF and ELSE statements; CASE statements; FOR and WHILE loops"}, {"@type": "Syllabus", "name": "Module 4: PLC program architecture", "description": "Programs; Functions; Function blocks; Global variable lists; Reusable programming structures"}, {"@type": "Syllabus", "name": "Module 5: Timers and counters", "description": "TON, TOF and TP timers; CTU and CTD counters; Practical timing applications"}, {"@type": "Syllabus", "name": "Module 6: Practical PLC applications", "description": "Motor control; Sensor logic; Interlocking; Sequence control; Conveyor applications"}, {"@type": "Syllabus", "name": "Module 7: Debugging and troubleshooting", "description": "Online monitoring; Watch windows; Breakpoints; Common programming errors; Troubleshooting techniques"}, {"@type": "Syllabus", "name": "Module 8: Final practical project", "description": "Project overview and system design; Sensor detection and product counting; Conveyor sequence and sorting logic; Fault handling; Final assessment"}]}</script>
+<style>:root{color-scheme:light dark;--bg:#F7F6F2;--surf:#fff;--ink:#14181F;--mute:#5B6470;--line:#E6E3DB;--acc:#0E5C4A;--onacc:#fff;--gold:#A9832F;--sh:0 1px 2px rgba(20,24,31,.04),0 14px 34px -16px rgba(20,24,31,.18);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root{--bg:#0E1311;--surf:#151B18;--ink:#EDEFEA;--mute:#9AA59E;--line:#26302B;--acc:#4CC29B;--onacc:#06130E;--gold:#D5B25E;--sh:none}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--mute);font:17px/1.7 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;color:var(--ink);font-weight:600;letter-spacing:-.01em;line-height:1.15;margin:0 0 .5em}
+h1{font-size:clamp(2.1rem,5vw,3.5rem)}h2{font-size:clamp(1.6rem,3.2vw,2.3rem)}h3{font-size:1.2rem}
+p{margin:0 0 1em;max-width:64ch}a{color:inherit}strong{color:var(--ink)}small{font-size:.85rem}
+.w{max-width:1080px;margin:0 auto;padding:0 22px}
+header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav{display:flex;flex-wrap:wrap;gap:6px 22px;align-items:center;min-height:64px;padding:6px 0}
+.logo{font:600 1.3rem Fraunces,Georgia,serif;color:var(--ink);text-decoration:none;margin-right:auto}
+nav a:not(.logo):not(.btn){text-decoration:none;font-size:.93rem;padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+nav a.on,nav a:not(.logo):not(.btn):hover{color:var(--ink);border-color:var(--acc)}
+nav .btn{margin:0;padding:9px 18px;font-size:.9rem}
+section{padding:72px 0}section+section{border-top:1px solid var(--line)}
+.eyebrow{display:block;font:500 .76rem Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.btn{display:inline-block;background:var(--acc);color:var(--onacc);font:500 .98rem Inter,sans-serif;padding:13px 24px;border:1px solid var(--acc);border-radius:10px;text-decoration:none;cursor:pointer;margin:0 10px 10px 0;transition:transform .15s,box-shadow .2s}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--sh)}.btn.alt{background:transparent;color:var(--ink);border-color:var(--line)}.btn.alt:hover{border-color:var(--ink)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(235px,1fr))}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--sh);transition:transform .25s,border-color .25s}
+a.card{display:block;text-decoration:none}a.card:hover,.card:hover{border-color:var(--acc)}a.card:hover{transform:translateY(-3px)}.card p{margin:0;font-size:.95rem}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:52px;align-items:center}@media(max-width:820px){.hero{grid-template-columns:1fr;gap:32px}}
+.stats{display:flex;flex-wrap:wrap;gap:32px;margin-top:22px;font-size:.9rem}.stats b{display:block;font:600 2rem Fraunces,serif;color:var(--ink);line-height:1.1}
+.num{width:34px;height:34px;border-radius:50%;border:1px solid var(--acc);color:var(--acc);display:grid;place-items:center;font-weight:500;margin-bottom:12px}
+ul.l{padding-left:1.2em;margin:0 0 1em}ul.l li{margin:.35em 0}
+.rung{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--sh)}
+.rung .row{display:flex;align-items:center;margin:20px 0}.wire{flex:1;height:3px;background:var(--line);min-width:14px;transition:background .3s}.wire.hot{background:var(--acc)}
+.node{border:2px solid var(--line);border-radius:8px;padding:6px 10px;font:500 .85rem Inter,sans-serif;text-align:center;min-width:62px;color:var(--ink);transition:all .3s}.node.hot{border-color:var(--acc);background:var(--acc);color:var(--onacc)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .1s linear}
+form{display:grid;gap:14px}label{display:grid;gap:5px;font-weight:500;font-size:.92rem;color:var(--ink)}
+input,select,textarea{font:inherit;padding:12px 14px;border:1px solid var(--line);background:var(--surf);color:var(--ink);border-radius:10px;transition:border-color .2s}input:focus,textarea:focus{border-color:var(--acc);outline:0}
+.msg{padding:14px 18px;background:var(--surf);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:10px;margin:14px 0}
+.tag{display:inline-block;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--acc);border:1px solid var(--acc);padding:2px 10px;border-radius:20px;margin-bottom:12px}
+pre{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;font-size:.88rem;color:var(--ink)}
+.qf{border:1px solid var(--line);border-radius:14px;margin:0 0 16px;padding:16px 20px;background:var(--surf)}.qf legend{font-weight:500;color:var(--ink);padding:0 6px}
+.op{display:flex;gap:10px;font-weight:400;color:var(--mute);padding:9px 12px;border:1px solid transparent;border-radius:10px;cursor:pointer;transition:background .2s}.op:hover{background:var(--bg)}
+.ex{font-size:.92rem;margin-top:8px}.ok{color:var(--acc)}
+details.mod{border-top:1px solid var(--line);padding:6px 0}details.mod summary{cursor:pointer;padding:12px 0;color:var(--ink);font-weight:500}
+.map{display:flex;flex-direction:column;max-width:520px}.lv{display:flex;align-items:center;gap:16px;text-decoration:none;padding:9px 0;position:relative}
+.lv b{width:42px;height:42px;flex:none;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--line);background:var(--surf);color:var(--ink);font-weight:500;z-index:1}
+.lv:not(:last-child)::after{content:"";position:absolute;left:20px;top:51px;bottom:-9px;width:1.5px;background:var(--line)}
+.lv.done b{background:var(--acc);border-color:var(--acc);color:var(--onacc)}.lv.next b{border-color:var(--acc);color:var(--acc);box-shadow:0 0 0 5px color-mix(in srgb,var(--acc) 15%,transparent)}.lv span{color:var(--ink)}
+.ring{width:130px;height:130px;border-radius:50%;background:conic-gradient(var(--acc) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center}.ring i{width:104px;height:104px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font:600 1.6rem Fraunces,serif;color:var(--ink);font-style:normal}
+.xp{height:8px;background:var(--line);border-radius:4px;overflow:hidden}.xp i{display:block;height:100%;background:var(--acc)}
+.bd{display:inline-flex;flex-direction:column;align-items:center;width:118px;text-align:center;font-size:.82rem;margin:0 10px 14px 0}.bd b{font-size:1.8rem}.bd.off{opacity:.3;filter:grayscale(1)}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:30px;z-index:60;font-size:.92rem;max-width:90vw}
+#net{position:fixed;top:0;left:0;right:0;z-index:70;background:var(--ink);color:var(--bg);padding:8px 12px;text-align:center;font-size:.9rem}
+.sk{display:block;border-radius:6px;background:linear-gradient(90deg,var(--line),var(--surf),var(--line));background-size:200% 100%;animation:sh 1.3s infinite}@keyframes sh{to{background-position:-200% 0}}
+.js .rv{opacity:0;transform:translateY(14px)}.js .rv.in{opacity:1;transform:none;transition:opacity .6s ease,transform .6s ease}
+footer{padding:48px 0;border-top:1px solid var(--line);font-size:.92rem}footer .grid{margin-bottom:20px}footer a{display:block;text-decoration:none;margin:4px 0}footer a:hover{color:var(--ink)}
+@media(prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none}*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}</style>
 </head>
 <body>
-<header><div class="w"><nav id="nav"></nav></div></header>
-<main id="app" class="w"></main>
-<footer><div class="w" id="foot"></div></footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3/dist/umd/supabase.js"></script>
-<script>
-var R={};
-var SB_URL='https://cnmkusligiirfebtsojy.supabase.co',SB_KEY='sb_publishable_OuPSaUIxHuUMvXSLe84aig_kpxNDMyv';
-var sb=null,user=null,cur='home';
-try{sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{flowType:'pkce'}})}catch(e){}
-function say(m){document.getElementById('ok').innerHTML='<div class="msg">'+m+'</div>'}
-function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-function submit(fn){var f=document.getElementById('f'),b=f.querySelector('button');f.addEventListener('submit',function(e){e.preventDefault();if(!f.checkValidity()){f.reportValidity();return}
-if(!sb){say('The database connection didn’t load. Check your internet connection and reload the page.');return}
-var v={};new FormData(f).forEach(function(x,k){v[k]=x});b.disabled=true;
-Promise.resolve().then(function(){return fn(v,f)}).catch(function(x){say('Something went wrong: '+esc(x.message||x))}).then(function(){b.disabled=false})})}
-
-function cards(a){return '<div class="grid">'+a.map(function(c){return '<div class="card"><h3>'+c[0]+'</h3><p>'+c[1]+'</p></div>'}).join('')+'</div>'}
-function ul(a){return '<ul class="l">'+a.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>'}
-function btn(t,h,alt){return '<a class="btn'+(alt?' alt':'')+'" href="#'+h+'">'+t+'</a>'}
-
-R.home={t:'BrainForging | Learn PLC Programming, Automation & Robotics',h:function(){return '<section><h1>Don’t just learn engineering. Build it.</h1><p>BrainForging explains complex engineering concepts with simple language, real industrial examples, hands-on exercises, five-question assessments and practical projects. Learn at your own pace and connect classroom knowledge with real applications.</p>'+btn('Explore courses','courses')+btn('Start learning','register',1)+
-'<div class="rung" aria-label="Interactive PLC timer example"><strong>Try it: a PLC timer rung</strong><div class="row"><div class="node" id="x0">X0</div><div class="wire" id="w1"></div><div class="node" id="ton">TON 2s</div><div class="wire" id="w2"></div><div class="node" id="y0">Y0</div></div><div class="bar"><i id="bar"></i></div><p><small id="rs">Hold the button. When X0 stays on for 2 seconds, the timer finishes and turns on output Y0.</small></p><button class="btn" id="hold" style="margin:0">Hold to switch on X0</button></div></section>'+
-'<section><h2>Understanding engineering shouldn’t be complicated.</h2><p>Many learners know the definitions but struggle to connect them to real systems. For every concept, we explain what it means, why it matters, where it is used, how it works in a real application, and how you can practise it yourself.</p></section>'+
-'<section><h2>A better way to learn engineering.</h2>'+cards([['Learn','Simple explanations, illustrations and relatable real-world examples.'],['Practise','Interactive exercises, programming challenges and technical activities.'],['Test','Five-question lesson assessments with explanations for every answer.'],['Build','Practical assignments and projects that apply what you learned.']])+'</section>'+
-'<section><h2>Explore engineering technologies.</h2>'+cards([['Industrial automation','Control systems, architecture, sensors, actuators and machine operations.'],['PLC programming','PLC fundamentals, IEC 61131-3, Structured Text and control logic.'],['Beckhoff TwinCAT 3','PLC programming, motion control, EtherCAT and industrial communication.'],['Robotics','Industrial robots, robot programming, coordinate systems and motion.'],['ROS 2 & autonomous systems','Nodes, topics, services, navigation and autonomous robot concepts.'],['Industrial communication','Modbus, EtherNet/IP, MQTT, ADS and device-to-device communication.']])+'</section>'+
-'<section><h2>Start with practical PLC programming.</h2><div class="card"><span class="tag">Featured course</span><h3>Beckhoff TwinCAT 3 – PLC Programming Fundamentals</h3><p>Start from the fundamentals and progress towards practical automation applications: the TwinCAT 3 environment, Structured Text, function blocks, timers, counters, debugging and a conveyor sorting project.</p></div><br>'+btn('Explore TwinCAT 3 course','twincat')+'</section>'+
-'<section><h2>Real applications, not abstract theory.</h2>'+ul(['How does a PLC control an automatic water pump?','How does a conveyor sorting system identify products?','How does a timer control machine sequencing?','How do two PLCs exchange information?','How does an industrial robot perform pick-and-place?','How does an autonomous robot understand its environment?'])+'</section>'+
-'<section style="border:0"><h2>Your engineering journey starts here.</h2><p>Build your foundation, strengthen your technical knowledge and develop the confidence to create engineering solutions.</p>'+btn('Explore courses','courses')+'</section>'},
-i:function(){var on=false,t=0,iv=null,$=function(i){return document.getElementById(i)},b=$('hold');
-function draw(){var d=t>=2;$('x0').className='node'+(on?' hot':'');$('w1').className='wire'+(on?' hot':'');$('ton').className='node'+(d?' hot':'');$('w2').className='wire'+(d?' hot':'');$('y0').className='node'+(d?' hot':'');$('bar').style.width=Math.min(t/2*100,100)+'%';$('rs').textContent=d?'Timer done: Y0 is on. Release X0 and the rung resets.':on?'Timer running: '+t.toFixed(1)+' s of 2.0 s':'Hold the button. When X0 stays on for 2 seconds, the timer finishes and turns on output Y0.'}
-function go(v){if(v===on)return;on=v;clearInterval(iv);if(v){iv=setInterval(function(){t=Math.min(t+.1,2);draw()},100)}else t=0;draw()}
-b.addEventListener('pointerdown',function(e){e.preventDefault();go(true)});['pointerup','pointerleave','pointercancel'].forEach(function(n){b.addEventListener(n,function(){go(false)})});
-b.addEventListener('keydown',function(e){if(e.key===' '||e.key==='Enter'){e.preventDefault();go(true)}});b.addEventListener('keyup',function(){go(false)})}};
-
-
-R.courses={t:'Online Engineering Courses | PLC, Automation & Robotics – BrainForging',h:function(){return '<section><h1>Find the right course for your engineering journey.</h1><p>Whether you are starting out or improving your technical skills, explore structured courses designed around practical understanding and application.</p><div class="card"><span class="tag">Available</span><h3>Beckhoff TwinCAT 3 – PLC Programming Fundamentals</h3><p>Level: beginner to intermediate. Format: self-paced. Method: explanations, examples, exercises and assessments.</p></div><br>'+btn('View course','twincat')+'</section><section style="border:0"><h2>Coming soon</h2>'+cards([['Robotics programming','Planned'],['ROS 2 fundamentals','Planned'],['Industrial communication','Planned'],['Embedded systems','Planned'],['Industrial IoT','Planned']])+'</section>'}};
-
-R.twincat={t:'Beckhoff TwinCAT 3 Course | PLC Programming & Structured Text',h:function(){return '<section><h1>Learn Beckhoff TwinCAT 3 through practical engineering.</h1><p>Understand the fundamentals, explore the TwinCAT 3 environment, write Structured Text programs and practise concepts through industrial automation scenarios.</p>'+btn('Start learning','register')+'</section>'+
-'<section><h2>What you will learn</h2>'+ul(['Understand PLC architecture and operation','Explain the PLC scan cycle','Navigate the TwinCAT 3 development environment','Create basic PLC projects','Write Structured Text with conditions and loops','Use programs, functions and function blocks','Work with timers and counters','Monitor and debug PLC applications'])+'</section>'+
-'<section><h2>Who should take this course?</h2>'+cards([['Engineering students','Build practical knowledge of PLC programming and automation.'],['Fresh graduates','Build a foundation in industrial control software.'],['Working professionals','Strengthen your TwinCAT 3 and PLC concepts.'],['Beginners','Start with structured explanations and practical examples.']])+'<h3 style="margin-top:28px">Requirements</h3>'+ul(['Basic computer knowledge','Interest in industrial automation','No advanced PLC knowledge needed for beginner modules','TwinCAT 3 installation may be needed for some exercises'])+'</section>'+
-'<section><h2>Curriculum</h2>'+MODS.map(function(m,i){return '<div class="mod"><h3>'+m[0]+'</h3>'+(m[2]?ul(LS.filter(function(L){return L.m===i+1}).map(function(L){return '<a href="#'+L.id+'">'+L.t+'</a>'}))+'<p><small>Live now. Log in to take the lessons and quizzes.</small></p>':ul(m[1])+'<p><small>Coming soon</small></p>')+'</div>'}).join('')+'</section>'+
-'<section style="border:0"><h2>Our learning method</h2><p>Every lesson: understand the concept, explore a real-world example, learn the application, study the TwinCAT implementation, complete a practical exercise, then answer five assessment questions. You must reach the passing score to unlock the next lesson.</p>'+btn('Enrol in the course','register')+'</section>'}};
-
-R['how-we-teach']={t:'How BrainForging Works | Practical Engineering Learning',h:function(){return '<section style="border:0"><h1>Learn by understanding. Improve through practice.</h1><p>Technical education should be more than reading definitions or watching videos. Every topic should help you understand an idea and apply it.</p>'+cards([['Understand','We break concepts into smaller, easy-to-follow explanations.'],['Relate','We connect each concept to familiar situations and industrial applications.'],['Implement','We show how it is implemented with real engineering tools and code.'],['Practise','Exercises strengthen your understanding.'],['Evaluate','Answer five questions per lesson, review mistakes and retry until you reach the required score.'],['Build','Apply your knowledge in assignments and projects.']])+'</section>'}};
-
-R.projects={t:'Practical Engineering Projects | PLC & Robotics Projects – BrainForging',h:function(){return '<section><h1>Turn engineering knowledge into practical skills.</h1><p>Applying a concept in a complete system is where deeper learning happens. These are the planned project areas.</p>'+cards([['PLC projects','Automated conveyor sorting, motor control, product counting, alarm and fault monitoring.'],['Industrial automation','Automatic water tank control, machine sequencing, sensor-based automation, communication monitoring.'],['Robotics','Robot pick-and-place simulation, motion programming, automated inspection.'],['ROS 2','Turtlesim, mobile robot control, sensor integration, navigation fundamentals.']])+'</section><section style="border:0"><h3>Every published project includes</h3>'+ul(['Project overview and learning objectives','Required software and hardware','System architecture','Step-by-step activities','Expected results','Assessment criteria'])+'</section>'}};
-
-R['learning-paths']={t:'Engineering Learning Paths | Automation & Robotics – BrainForging',h:function(){var P=[['Industrial automation engineer',['Electrical and automation fundamentals','PLC programming fundamentals','Structured Text programming','Industrial communication','Practical automation projects']],['PLC programmer',['PLC fundamentals','IEC 61131-3 programming concepts','TwinCAT 3 development','Timers, counters and function blocks','Debugging and practical applications']],['Robotics developer',['Programming fundamentals','Robotics fundamentals','ROS 2 fundamentals','Robot simulation and control','Autonomous robotics projects']]];
-return '<section><h1>Know what to learn next.</h1><p>Learning paths organise related courses into stages. Stages without a published course are planned.</p></section><section style="border:0">'+P.map(function(p){return '<div class="mod"><h3>'+p[0]+'</h3><ol class="l">'+p[1].map(function(s){return '<li>'+s+'</li>'}).join('')+'</ol></div>'}).join('')+'</section>'}};
-
-R.about={t:'About BrainForging | Practical Engineering Education',h:function(){return '<section><h1>Engineering knowledge should lead to engineering skills.</h1><p>BrainForging is built on a simple idea: engineering should be learned through understanding, practice and implementation. We combine fundamentals, real-world examples, interactive exercises and project-based learning.</p></section><section><div class="grid"><div><h2>Our mission</h2><p>To help engineering students, aspiring professionals and working engineers build practical technical knowledge and become confident problem-solvers.</p></div><div><h2>Our vision</h2><p>A learning environment where learners move beyond theory and develop the ability to understand, program and build engineering systems.</p></div></div></section><section style="border:0"><h2>What we focus on</h2>'+ul(['Industrial automation','PLC programming','Beckhoff TwinCAT','Robotics and ROS 2','Industrial communication','Embedded systems'])+'<p><strong>Don’t just memorise how something works. Understand why it works and learn how to apply it.</strong></p></section>'}};
-
-function formView(title,intro,fields,cta,done){return '<section style="border:0"><h1>'+title+'</h1><p>'+intro+'</p><form id="f" novalidate>'+fields+'<button class="btn" type="submit" style="margin:0">'+cta+'</button></form><div id="ok"></div></section>'}
-function fld(l,n,ty,req,ex){return '<label>'+l+(req?'':' (optional)')+(ty==='ta'?'<textarea name="'+n+'" rows="5"'+(req?' required':'')+'></textarea>':'<input name="'+n+'" type="'+ty+'"'+(req?' required':'')+(ex||'')+'>')+'</label>'}
-R.contact={t:'Contact BrainForging | Engineering Learning Support',h:function(){return formView('Let’s talk engineering.','Have a question about a course, learning path or technical topic? Send us a message.',fld('Full name','name','text',1)+fld('Email address','email','email',1)+fld('Phone number with country code','phone','tel',0)+fld('Subject','sub','text',1)+fld('Message','msg','ta',1),'Send message')},i:function(){submit(async function(v,f){var r=await sb.from('bf_messages').insert({name:v.name,email:v.email,phone:v.phone||null,subject:v.sub,message:v.msg});if(r.error){say('Your message wasn’t sent: '+esc(r.error.message));return}say('Thanks, your message was sent. We’ll reply by email.');f.reset()})}};
-R.register={t:'Create Your BrainForging Account | Start Learning Engineering',h:function(){return formView('Start building your engineering skills.','Create your account to access lessons, exercises, assessments and learning progress.',fld('Full name','name','text',1)+fld('Email address','email','email',1)+fld('Phone number with country code','phone','tel',1)+fld('Country','country','text',1)+fld('Password','pw','password',1,' minlength="8" autocomplete="new-password"')+fld('Confirm password','pw2','password',1,' autocomplete="new-password"')+fld('Education level','edu','text',0)+fld('Learning goals','goal','ta',0)+'<label style="display:flex;gap:8px;align-items:flex-start"><input type="checkbox" name="terms" required style="margin-top:5px"> I agree to the Terms of Service and Privacy Policy.</label><label style="display:flex;gap:8px;align-items:flex-start"><input type="checkbox" name="mkt" style="margin-top:5px"> Send me course updates (optional).</label>','Create account')},i:function(){submit(async function(v){if(v.pw!==v.pw2){say('The passwords don’t match. Re-enter both and submit again.');return}
-var r=await sb.auth.signUp({email:v.email,password:v.pw,options:{emailRedirectTo:location.origin+location.pathname,data:{full_name:v.name,phone:v.phone,country:v.country,education:v.edu||'',goals:v.goal||'',marketing:!!v.mkt}}});
-if(r.error){say(esc(r.error.message));return}
-if(r.data.session){location.hash='dashboard'}else say('Account created. Check your email and open the confirmation link in this same browser.')})}};
-
-R.login={t:'Log in | BrainForging',h:function(){return formView('Welcome back.','Log in to continue learning.',fld('Email address','email','email',1)+fld('Password','pw','password',1,' autocomplete="current-password"'),'Log in')+'<p><a href="#" id="fp">Forgot your password?</a></p><p><a href="#register">Create an account</a></p>'},i:function(){
-submit(async function(v){var r=await sb.auth.signInWithPassword({email:v.email,password:v.pw});if(r.error){say(esc(r.error.message));return}location.hash='dashboard'});
-document.getElementById('fp').onclick=function(e){e.preventDefault();var em=document.querySelector('#f [name=email]').value;if(!em){say('Enter your email address above first, then select “Forgot your password?” again.');return}if(!sb)return;
-sb.auth.resetPasswordForEmail(em,{redirectTo:location.origin+location.pathname}).then(function(r){say(r.error?esc(r.error.message):'If that email has an account, a reset link is on its way. Open it in this same browser.')})}}};
-R.reset={t:'Set a new password | BrainForging',h:function(){return formView('Set a new password.','Choose a new password for your account.',fld('New password','pw','password',1,' minlength="8" autocomplete="new-password"'),'Save password')},i:function(){submit(async function(v){var r=await sb.auth.updateUser({password:v.pw});if(r.error){say(esc(r.error.message));return}say('Password updated.');setTimeout(function(){location.hash='dashboard'},1200)})}};
-R.dashboard={t:'Your dashboard | BrainForging',h:function(){return '<section style="border:0"><h1 id="dh">Your dashboard</h1><div id="dc"><p>Loading…</p></div></section>'},i:function(){
-var dc=document.getElementById('dc');if(!sb){dc.innerHTML='<p>The database connection didn’t load. Reload the page.</p>';return}
-sb.auth.getSession().then(function(r){var se=r.data.session;if(!se){location.hash='login';return}
-return sb.rpc('bf_touch_streak').then(function(){return Promise.all([sb.from('bf_profiles').select('full_name,xp,streak').eq('id',se.user.id).maybeSingle(),sb.from('bf_progress').select('lesson,score').eq('course',CRS).eq('passed',true),sb.rpc('bf_weekly_leaderboard')])}).then(function(a){
-if(a[0].error){dc.innerHTML='<div class="msg">Almost there: run supabase-gamification.sql in your Supabase SQL Editor to switch on XP, streaks and the leaderboard.</div>';return}
-var pf=a[0].data||{},pr=a[1].data||[],lb=a[2].data||[],xp=pf.xp||0,st=pf.streak||0,lv=Math.floor(xp/100)+1,ps=pr.map(function(x){return x.lesson}),nx=LS.filter(function(L){return ps.indexOf(L.id)<0})[0];
-document.getElementById('dh').textContent='Welcome back'+(pf.full_name?', '+pf.full_name:'')+'.';
-dc.innerHTML='<div class="grid"><div class="card"><h3>Level '+lv+'</h3><div class="xp"><i style="width:'+(xp%100)+'%"></i></div><p><small>'+xp+' XP, '+(100-xp%100)+' to level '+(lv+1)+'</small></p></div><div class="card"><h3>🔥 '+st+'-day streak</h3><p>'+(st?'Come back tomorrow to keep it going.':'Pass a lesson to start your streak.')+'</p></div><div class="card"><h3>Lessons</h3><p>'+ps.length+' of '+LS.length+' passed</p></div></div><p style="margin-top:22px">'+(nx?btn(ps.length?'Continue: '+nx.t:'Start level 1',nx.id):'')+btn('Adventure map','twincat',1)+'<button class="btn alt" id="out">Log out</button></p><h2>Badges</h2>'+BD(pr,st).map(function(b){return '<div class="bd'+(b.on?'':' off')+'"><b>'+b.i+'</b><strong>'+b.n+'</strong>'+b.d+'</div>'}).join('')+'<h2>This week’s leaderboard</h2>'+(lb.length?'<ol class="l">'+lb.map(function(x){return '<li'+(x.me?' style="font-weight:700"':'')+'>'+esc(x.name)+(x.me?' (you)':'')+': '+x.xp+' XP</li>'}).join('')+'</ol>':'<p>No XP earned this week yet. Pass a lesson to take the top spot.</p>');
-document.getElementById('out').onclick=function(){sb.auth.signOut().then(function(){location.hash='home'})}})})}};
-
-var CRS='twincat-3';
-var LS=[],MODS=[],CP='courses/beckhoff-twincat-3/';
-function loadCourse(){return fetch(CP+'course.json').then(function(r){return r.json()}).then(function(c){return Promise.all(c.modules.map(function(f){return fetch(CP+f).then(function(r){return r.json()})}))}).then(function(ms){ms.forEach(function(m,mi){var it=[];if(m.lessons){m.lessons.forEach(function(L,li){L.id='l-'+(mi+1)+'-'+(li+1);L.m=mi+1;LS.push(L);it.push(L.t)})}else it=m.topics;MODS.push([m.title,it,!!m.lessons])});LS.forEach(reg)})}
-var muted=false,AC=null,PR=[],ST=0;
-function tone(f,d,t){if(muted)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();var o=AC.createOscillator(),g=AC.createGain(),n=AC.currentTime+t;o.type='triangle';o.frequency.value=f;g.gain.setValueAtTime(.15,n);g.gain.exponentialRampToValueAtTime(.001,n+d);o.connect(g);g.connect(AC.destination);o.start(n);o.stop(n+d)}catch(e){}}
-function ding(){tone(660,.15,0);tone(880,.2,.1)}function buzz(){tone(180,.25,0)}function win(){[523,659,784,1047].forEach(function(f,i){tone(f,.2,i*.12)})}
-function toast(t){var d=document.createElement('div');d.className='toast';d.setAttribute('role','status');d.textContent=t;document.body.appendChild(d);setTimeout(function(){d.remove()},3400)}
-function boom(t){if(!matchMedia('(prefers-reduced-motion: reduce)').matches){for(var i=0;i<26;i++){var e=document.createElement('span');e.className='cf';e.textContent=['⭐','🎉','✨','🔧'][i%4];e.style.left=Math.random()*100+'vw';e.style.animationDelay=Math.random()*.4+'s';document.body.appendChild(e);setTimeout(function(x){x.remove()},2400,e)}}toast(t)}
-function BD(pr,st){return [{i:'🎯',n:'First steps',d:'Pass your first lesson',on:pr.length>0},{i:'⭐',n:'Perfectionist',d:'Score 5 out of 5',on:pr.some(function(x){return x.score===5})},{i:'🔥',n:'Hot streak',d:'Reach a 3-day streak',on:st>=3},{i:'🏆',n:'Module 1 master',d:'Pass every Module 1 lesson',on:LS.length>0&&LS.filter(function(L){return L.m===1}).every(function(L){return pr.some(function(x){return x.lesson===L.id})})}]}
-function gate(i){var box=document.getElementById('lg');
-if(!sb){box.innerHTML='<p>The database connection didn’t load. Reload the page.</p>';return}
-sb.auth.getSession().then(function(r){if(!r.data.session){box.innerHTML='<div class="msg">Log in to take lessons, earn XP and save your progress.</div><p>'+btn('Log in','login')+btn('Create account','register',1)+'</p>';return}
-return Promise.all([sb.from('bf_progress').select('lesson,score').eq('course',CRS).eq('passed',true),sb.from('bf_profiles').select('streak').eq('id',r.data.session.user.id).maybeSingle()]).then(function(a){PR=a[0].data||[];ST=a[1].data?a[1].data.streak||0:0;
-if(i>0&&!PR.some(function(x){return x.lesson===LS[i-1].id})){box.innerHTML='<div class="msg">🔒 This level unlocks when you pass the previous lesson’s quiz.</div><p>'+btn('Go to the previous level',LS[i-1].id)+'</p>';return}
-show(LS[i],i,box)})})}
-function show(L,i,box){var nx=LS[i+1],right=0,seen=0,N=L.q.length;
-box.innerHTML='<h2>Understand</h2>'+L.c+'<h2>A real-world example</h2><p>'+L.x+'</p>'+(L.code?'<h2>In TwinCAT</h2><pre>'+esc(L.code)+'</pre>':'')+'<h2>Practise</h2><p>'+L.ex+'</p><h2>Quiz time: 4 of 5 to pass</h2><div id="qz">'+L.q.map(function(q,n){return '<fieldset class="qf"><legend>'+(n+1)+'. '+q[0]+'</legend>'+q[1].map(function(o,k){return '<label class="op"><input type="radio" name="q'+n+'" value="'+k+'"> '+o+'</label>'}).join('')+'<div class="ex" aria-live="polite"></div></fieldset>'}).join('')+'</div><div id="res"></div>';
-document.getElementById('qz').addEventListener('change',function(e){var t=e.target;if(t.type!=='radio')return;var fs=t.closest('fieldset'),q=L.q[+t.name.slice(1)],ok=+t.value===q[2];fs.disabled=true;seen++;
-if(ok){right++;ding()}else buzz();
-fs.querySelector('.ex').innerHTML=(ok?'✓ Correct! ':'✗ Not quite. The answer is “'+q[1][q[2]]+'”. ')+q[3];
-if(seen<N)return;var res=document.getElementById('res');
-if(right<4){res.innerHTML='<div class="msg">You scored '+right+' of 5. You need 4 to pass. Review the lesson and try again.</div><p><button class="btn alt" id="rt">Try again</button></p>';document.getElementById('rt').onclick=function(){show(L,i,box);window.scrollTo(0,0)};return}
-res.innerHTML='<div class="msg">You scored '+right+' of 5. Saving…</div>';
-sb.rpc('bf_complete_lesson',{p_course:CRS,p_lesson:L.id,p_score:right}).then(function(r){
-if(r.error){res.innerHTML='<div class="msg">You passed ('+right+' of 5) but saving failed: '+esc(r.error.message)+'. Have you run supabase-gamification.sql?</div>';return}
-var d=r.data,old=BD(PR,ST);if(!PR.some(function(x){return x.lesson===L.id}))PR.push({lesson:L.id,score:right});ST=d.streak;var nw=BD(PR,ST);
-win();boom(d.gain?'+'+d.gain+' XP! You are level '+(Math.floor(d.xp/100)+1):'Level replayed. No new XP.');
-nw.forEach(function(b,k){if(b.on&&!old[k].on)setTimeout(function(){toast('🏅 Badge unlocked: '+b.n)},2000)});
-res.innerHTML='<div class="msg">Level complete! '+(d.gain?'+'+d.gain+' XP. ':'')+'🔥 '+d.streak+'-day streak.</div><p>'+(nx?btn('Next level: '+nx.t,nx.id):btn('Back to the map','twincat'))+btn('Dashboard','dashboard',1)+'</p>'})})}
-function reg(L,i){R[L.id]={t:L.t+' | BrainForging',h:function(){return '<section style="border:0"><p><a href="#twincat">← TwinCAT 3 course</a></p><span class="tag">Module 1, lesson '+(i+1)+' of '+LS.length+'</span><h1>'+L.t+'</h1><div id="lg"><p>Loading…</p></div></section>'},i:function(){gate(i)}}}
-var h0=R.twincat.h;R.twincat.h=function(){return h0().replace('</section>','</section><section><h2>Your adventure path</h2><p>Beat each level’s quiz to unlock the next one.</p><div id="map"></div></section>')};
-R.twincat.i=function(){var m=document.getElementById('map');
-function draw(ps){var cur=0;m.innerHTML='<div class="map">'+LS.map(function(L,i){var d=ps.indexOf(L.id)>=0,c=d?'done':(!cur?(cur=1,'cur'):'lock');return '<a class="lv '+c+'" href="#'+L.id+'"><b>'+(d?'✓':c==='cur'?(i+1):'🔒')+'</b><span>Level '+(i+1)+': '+L.t+'</span></a>'}).join('')+MODS.filter(function(x){return !x[2]}).map(function(x){return '<span class="lv lock"><b>🔒</b><span>'+x[0]+' (coming soon)</span></span>'}).join('')+'</div>'}
-draw([]);if(!sb)return;sb.auth.getSession().then(function(r){if(!r.data.session)return;sb.from('bf_progress').select('lesson').eq('course',CRS).eq('passed',true).then(function(p){draw((p.data||[]).map(function(x){return x.lesson}))})})};
-document.addEventListener('click',function(e){if(e.target.id==='snd'){muted=!muted;e.target.textContent=muted?'🔇 Sound off':'🔊 Sound on'}});
-
-var NAV=[['courses','Courses'],['learning-paths','Learning paths'],['projects','Projects'],['how-we-teach','How we teach'],['about','About'],['contact','Contact']];
-function nav(){document.getElementById('nav').innerHTML='<a class="logo" href="#home">BrainForging</a>'+NAV.map(function(n){return '<a href="#'+n[0]+'"'+(n[0]===cur?' class="on"':'')+'>'+n[1]+'</a>'}).join('')+(user?'<a class="btn" style="margin:0;padding:8px 16px" href="#dashboard">Dashboard</a>':'<a href="#login">Log in</a><a class="btn" style="margin:0;padding:8px 16px" href="#register">Sign up</a>')}
-function route(){var k=(location.hash||'#home').slice(1);if(!R[k])k='home';if(user&&(k==='register'||k==='login')){location.hash='dashboard';return}var r=R[k];document.title=r.t;
-document.getElementById('app').innerHTML=r.h();if(r.i)r.i();
-cur=k;nav();
-window.scrollTo(0,0)}
-document.getElementById('foot').innerHTML='<div class="grid"><div><strong>BrainForging</strong><br>Learn. Practise. Build.<br>Practical engineering education that connects technical knowledge with real-world applications.</div><div><strong>Explore</strong><a href="#courses">Courses</a><a href="#learning-paths">Learning paths</a><a href="#projects">Projects</a><a href="#about">About</a></div><div><strong>Topics</strong><a href="#twincat">TwinCAT 3</a><a href="#courses">PLC programming</a><a href="#projects">Robotics and ROS 2</a></div><div><strong>Support</strong><a href="#contact">Contact</a></div></div>© 2026 BrainForging. All rights reserved.<p><button class="btn alt" id="snd" style="margin:8px 0 0;padding:6px 12px">🔊 Sound on</button></p>';
-if(sb)sb.auth.onAuthStateChange(function(ev,se){user=se?se.user:null;if(ev==='PASSWORD_RECOVERY'){location.hash='reset'}else if(user&&(cur==='register'||cur==='login')){location.hash='dashboard'}nav()});
-document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href="#register"]');if(a&&user){e.preventDefault();location.hash='dashboard'}});
-window.addEventListener('hashchange',route);loadCourse().catch(function(){}).then(route);
-</script>
+<div id="net" hidden role="alert"></div>
+<header><div class="w"><nav id="nav" aria-label="Main"><a class="logo" href="#home">BrainForging</a></nav></div></header>
+<main id="app" class="w" style="min-height:80vh"><section aria-busy="true"><span class="sk" style="height:36px;width:70%;margin-bottom:14px"></span><span class="sk" style="height:36px;width:50%;margin-bottom:26px"></span><span class="sk" style="height:18px;width:88%;margin-bottom:10px"></span><span class="sk" style="height:18px;width:76%;margin-bottom:26px"></span><span class="sk" style="height:48px;width:200px"></span></section></main>
+<section id="syl" class="w" aria-labelledby="syl-h"><h2 id="syl-h">Beckhoff TwinCAT 3 &amp; EtherCAT course: 8-module syllabus</h2><p>Learn PLC programming on your Windows laptop with no PLC hardware.</p><article><h3>Module 1: Introduction to PLC and industrial automation</h3><p>What is a PLC?; Why industries use PLCs; PLC architecture; The PLC scan cycle; Real-world automation applications</p></article><article><h3>Module 2: Getting started with TwinCAT 3</h3><p>Introduction to Beckhoff TwinCAT; The development environment; Creating a PLC project; Runtime and PLC configuration</p></article><article><h3>Module 3: Structured Text programming</h3><p>Variables and data types; Operators and expressions; IF and ELSE statements; CASE statements; FOR and WHILE loops</p></article><article><h3>Module 4: PLC program architecture</h3><p>Programs; Functions; Function blocks; Global variable lists; Reusable programming structures</p></article><article><h3>Module 5: Timers and counters</h3><p>TON, TOF and TP timers; CTU and CTD counters; Practical timing applications</p></article><article><h3>Module 6: Practical PLC applications</h3><p>Motor control; Sensor logic; Interlocking; Sequence control; Conveyor applications</p></article><article><h3>Module 7: Debugging and troubleshooting</h3><p>Online monitoring; Watch windows; Breakpoints; Common programming errors; Troubleshooting techniques</p></article><article><h3>Module 8: Final practical project</h3><p>Project overview and system design; Sensor detection and product counting; Conveyor sequence and sorting logic; Fault handling; Final assessment</p></article></section>
+<footer><div class="w" id="foot" style="min-height:160px"></div></footer>
+<script defer src="assets/app.js"></script>
 </body>
 </html>
