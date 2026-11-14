@@ -1,0 +1,40 @@
+{
+ "courses": [
+  {
+   "slug": "beckhoff-twincat-3",
+   "title": "Beckhoff TwinCAT 3 & EtherCAT: PLC Programming Fundamentals",
+   "short": "Learn PLC programming on your Windows laptop with no PLC hardware.",
+   "level": "Beginner to intermediate",
+   "category": "PLC & Automation",
+   "status": "live"
+  },
+  {
+   "slug": "robotics-programming",
+   "title": "Robotics Programming",
+   "short": "Industrial robots, coordinate systems, motion and pick-and-place programming.",
+   "category": "Robotics",
+   "status": "soon"
+  },
+  {
+   "slug": "ros-2-fundamentals",
+   "title": "ROS 2 Fundamentals",
+   "short": "Nodes, topics, services, navigation and autonomous robot concepts.",
+   "category": "Robotics",
+   "status": "soon"
+  },
+  {
+   "slug": "industrial-communication",
+   "title": "Industrial Communication",
+   "short": "Modbus, EtherNet/IP, MQTT, ADS and device-to-device communication.",
+   "category": "Automation",
+   "status": "soon"
+  },
+  {
+   "slug": "industrial-iot",
+   "title": "Industrial IoT",
+   "short": "Connect machines to dashboards and cloud services.",
+   "category": "IoT",
+   "status": "soon"
+  }
+ ]
+}

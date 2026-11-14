@@ -1,11 +1,38 @@
 {
- "id": "twincat-3",
- "title": "Beckhoff TwinCAT 3 & EtherCAT – PLC Programming Fundamentals",
+ "title": "Beckhoff TwinCAT 3 & EtherCAT: PLC Programming Fundamentals",
+ "tagline": "Learn Beckhoff TwinCAT 3 & EtherCAT on your Windows laptop. Zero expensive PLC hardware needed.",
+ "summary": "Learn PLC programming with Beckhoff TwinCAT 3 on your Windows laptop. Start from the fundamentals, write Structured Text, and finish with a conveyor sorting project.",
+ "level": "Beginner to intermediate",
+ "outcomes": [
+  "PLC architecture and the scan cycle",
+  "Navigating TwinCAT 3 and creating projects",
+  "Structured Text: variables, conditions and loops",
+  "Programs, functions and function blocks",
+  "Timers and counters",
+  "Debugging and troubleshooting a live program"
+ ],
+ "audience": [
+  [
+   "Engineering students",
+   "Practical PLC knowledge alongside your degree."
+  ],
+  [
+   "Fresh graduates",
+   "A foundation in industrial control software."
+  ],
+  [
+   "Working professionals",
+   "Strengthen your TwinCAT 3 skills."
+  ],
+  [
+   "Beginners",
+   "Start with simple explanations and examples."
+  ]
+ ],
+ "requirements": "Basic computer knowledge. A TwinCAT 3 installation is useful for some exercises.",
  "modules": [
   {
-   "file": "module-1.json",
    "title": "Module 1: Introduction to PLC and industrial automation",
-   "free": true,
    "lessons": [
     "What is a PLC?",
     "Why industries use PLCs",
@@ -15,9 +42,7 @@
    ]
   },
   {
-   "file": "module-2.json",
    "title": "Module 2: Getting started with TwinCAT 3",
-   "free": false,
    "lessons": [
     "Introduction to Beckhoff TwinCAT",
     "The development environment",
@@ -26,9 +51,7 @@
    ]
   },
   {
-   "file": "module-3.json",
    "title": "Module 3: Structured Text programming",
-   "free": false,
    "lessons": [
     "Variables and data types",
     "Operators and expressions",
@@ -38,9 +61,7 @@
    ]
   },
   {
-   "file": "module-4.json",
    "title": "Module 4: PLC program architecture",
-   "free": false,
    "lessons": [
     "Programs",
     "Functions",
@@ -50,9 +71,7 @@
    ]
   },
   {
-   "file": "module-5.json",
    "title": "Module 5: Timers and counters",
-   "free": false,
    "lessons": [
     "TON, TOF and TP timers",
     "CTU and CTD counters",
@@ -60,9 +79,7 @@
    ]
   },
   {
-   "file": "module-6.json",
    "title": "Module 6: Practical PLC applications",
-   "free": false,
    "lessons": [
     "Motor control",
     "Sensor logic",
@@ -72,9 +89,7 @@
    ]
   },
   {
-   "file": "module-7.json",
    "title": "Module 7: Debugging and troubleshooting",
-   "free": false,
    "lessons": [
     "Online monitoring",
     "Watch windows",
@@ -84,9 +99,7 @@
    ]
   },
   {
-   "file": "module-8.json",
    "title": "Module 8: Final practical project",
-   "free": false,
    "lessons": [
     "Project overview and system design",
     "Sensor detection and product counting",
