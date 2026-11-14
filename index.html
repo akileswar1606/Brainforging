@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BrainForging | Learn PLC Programming, Automation &amp; Robotics</title>
+<meta name="description" content="Learn PLC programming, industrial automation, TwinCAT 3 and robotics through practical engineering courses, real-world examples, interactive exercises and projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<style>
+:root{--bg:#eef1ee;--surf:#fff;--ink:#101820;--mute:#4d5b56;--line:#c9d2cd;--pan:#1f6f5c;--sig:#f2b01e;--onpan:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0d1512;--surf:#16211d;--ink:#e8efeb;--mute:#9fb0a9;--line:#2c3b36;--pan:#3fae92;--onpan:#07140f}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0d1512;--surf:#16211d;--ink:#e8efeb;--mute:#9fb0a9;--line:#2c3b36;--pan:#3fae92;--onpan:#07140f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "IBM Plex Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque","Segoe UI",sans-serif;line-height:1.1;margin:0 0 .5em;letter-spacing:-.02em}
+h1{font-size:clamp(2.3rem,6vw,4.2rem);font-weight:800}h2{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:700}h3{font-size:1.25rem;font-weight:700}
+p{margin:0 0 1em;max-width:68ch}a{color:inherit}
+.w{max-width:1080px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--line);background:var(--bg)}
+nav{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;padding:14px 0}
+nav .logo{font:800 1.3rem "Bricolage Grotesque",sans-serif;text-decoration:none;margin-right:auto}
+nav a{text-decoration:none;color:var(--mute);font-size:.95rem;padding:4px 0;border-bottom:2px solid transparent}
+nav a:hover,nav a.on{color:var(--ink);border-color:var(--sig)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--sig);outline-offset:2px}
+section{padding:56px 0;border-bottom:1px solid var(--line)}
+.btn{display:inline-block;background:var(--pan);color:var(--onpan);font:700 1rem "Bricolage Grotesque",sans-serif;padding:12px 22px;border:0;border-radius:4px;text-decoration:none;cursor:pointer;margin:0 10px 10px 0}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--ink);padding:10px 20px}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{background:var(--surf);border:1px solid var(--line);border-left:5px solid var(--pan);padding:18px 20px;border-radius:2px}
+.card p{margin:0;color:var(--mute);font-size:.95rem}
+.tag{display:inline-block;font-size:.8rem;background:var(--sig);color:#101820;padding:2px 8px;border-radius:2px;margin-bottom:8px}
+ul.l{padding-left:1.2em;margin:0 0 1em}ul.l li{margin:.3em 0}
+.rung{background:var(--surf);border:1px solid var(--line);padding:18px;margin-top:28px;max-width:680px}
+.rung .row{display:flex;align-items:center;gap:0;margin:14px 0}
+.wire{flex:1;height:3px;background:var(--mute);min-width:14px}.wire.hot{background:var(--sig)}
+.node{border:3px solid var(--mute);padding:6px 10px;font:700 .9rem "Bricolage Grotesque",sans-serif;text-align:center;min-width:64px}
+.node.hot{border-color:var(--sig);background:var(--sig);color:#101820}
+.bar{height:8px;background:var(--line);margin-top:6px}.bar i{display:block;height:100%;width:0;background:var(--pan)}
+.rung small{color:var(--mute)}
+form{display:grid;gap:14px;max-width:520px}
+label{display:grid;gap:4px;font-weight:500;font-size:.95rem}
+input,select,textarea{font:inherit;padding:10px;border:1px solid var(--mute);background:var(--surf);color:var(--ink);border-radius:2px}
+.msg{padding:12px 16px;background:var(--surf);border-left:5px solid var(--sig);max-width:520px;margin-top:14px}
+footer{padding:36px 0;color:var(--mute);font-size:.92rem}
+footer .grid{margin-bottom:20px}footer a{display:block;text-decoration:none;margin:3px 0}
+.mod{border-top:1px solid var(--line);padding:14px 0}.mod h3{margin-bottom:.2em}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="w"><nav id="nav"></nav></div></header>
+<main id="app" class="w"></main>
+<footer><div class="w" id="foot"></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3/dist/umd/supabase.js"></script>
+<script>
+var R={};
+var SB_URL='https://cnmkusligiirfebtsojy.supabase.co',SB_KEY='sb_publishable_OuPSaUIxHuUMvXSLe84aig_kpxNDMyv';
+var sb=null,user=null,cur='home';
+try{sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{flowType:'pkce'}})}catch(e){}
+function say(m){document.getElementById('ok').innerHTML='<div class="msg">'+m+'</div>'}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function submit(fn){var f=document.getElementById('f'),b=f.querySelector('button');f.addEventListener('submit',function(e){e.preventDefault();if(!f.checkValidity()){f.reportValidity();return}
+if(!sb){say('The database connection didn’t load. Check your internet connection and reload the page.');return}
+var v={};new FormData(f).forEach(function(x,k){v[k]=x});b.disabled=true;
+Promise.resolve().then(function(){return fn(v,f)}).catch(function(x){say('Something went wrong: '+esc(x.message||x))}).then(function(){b.disabled=false})})}
+
+function cards(a){return '<div class="grid">'+a.map(function(c){return '<div class="card"><h3>'+c[0]+'</h3><p>'+c[1]+'</p></div>'}).join('')+'</div>'}
+function ul(a){return '<ul class="l">'+a.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>'}
+function btn(t,h,alt){return '<a class="btn'+(alt?' alt':'')+'" href="#'+h+'">'+t+'</a>'}
+
+R.home={t:'BrainForging | Learn PLC Programming, Automation & Robotics',h:function(){return '<section><h1>Don’t just learn engineering. Build it.</h1><p>BrainForging explains complex engineering concepts with simple language, real industrial examples, hands-on exercises, five-question assessments and practical projects. Learn at your own pace and connect classroom knowledge with real applications.</p>'+btn('Explore courses','courses')+btn('Start learning','register',1)+
+'<div class="rung" aria-label="Interactive PLC timer example"><strong>Try it: a PLC timer rung</strong><div class="row"><div class="node" id="x0">X0</div><div class="wire" id="w1"></div><div class="node" id="ton">TON 2s</div><div class="wire" id="w2"></div><div class="node" id="y0">Y0</div></div><div class="bar"><i id="bar"></i></div><p><small id="rs">Hold the button. When X0 stays on for 2 seconds, the timer finishes and turns on output Y0.</small></p><button class="btn" id="hold" style="margin:0">Hold to switch on X0</button></div></section>'+
+'<section><h2>Understanding engineering shouldn’t be complicated.</h2><p>Many learners know the definitions but struggle to connect them to real systems. For every concept, we explain what it means, why it matters, where it is used, how it works in a real application, and how you can practise it yourself.</p></section>'+
+'<section><h2>A better way to learn engineering.</h2>'+cards([['Learn','Simple explanations, illustrations and relatable real-world examples.'],['Practise','Interactive exercises, programming challenges and technical activities.'],['Test','Five-question lesson assessments with explanations for every answer.'],['Build','Practical assignments and projects that apply what you learned.']])+'</section>'+
+'<section><h2>Explore engineering technologies.</h2>'+cards([['Industrial automation','Control systems, architecture, sensors, actuators and machine operations.'],['PLC programming','PLC fundamentals, IEC 61131-3, Structured Text and control logic.'],['Beckhoff TwinCAT 3','PLC programming, motion control, EtherCAT and industrial communication.'],['Robotics','Industrial robots, robot programming, coordinate systems and motion.'],['ROS 2 & autonomous systems','Nodes, topics, services, navigation and autonomous robot concepts.'],['Industrial communication','Modbus, EtherNet/IP, MQTT, ADS and device-to-device communication.']])+'</section>'+
+'<section><h2>Start with practical PLC programming.</h2><div class="card"><span class="tag">Featured course</span><h3>Beckhoff TwinCAT 3 – PLC Programming Fundamentals</h3><p>Start from the fundamentals and progress towards practical automation applications: the TwinCAT 3 environment, Structured Text, function blocks, timers, counters, debugging and a conveyor sorting project.</p></div><br>'+btn('Explore TwinCAT 3 course','twincat')+'</section>'+
+'<section><h2>Real applications, not abstract theory.</h2>'+ul(['How does a PLC control an automatic water pump?','How does a conveyor sorting system identify products?','How does a timer control machine sequencing?','How do two PLCs exchange information?','How does an industrial robot perform pick-and-place?','How does an autonomous robot understand its environment?'])+'</section>'+
+'<section style="border:0"><h2>Your engineering journey starts here.</h2><p>Build your foundation, strengthen your technical knowledge and develop the confidence to create engineering solutions.</p>'+btn('Explore courses','courses')+'</section>'},
+i:function(){var on=false,t=0,iv=null,$=function(i){return document.getElementById(i)},b=$('hold');
+function draw(){var d=t>=2;$('x0').className='node'+(on?' hot':'');$('w1').className='wire'+(on?' hot':'');$('ton').className='node'+(d?' hot':'');$('w2').className='wire'+(d?' hot':'');$('y0').className='node'+(d?' hot':'');$('bar').style.width=Math.min(t/2*100,100)+'%';$('rs').textContent=d?'Timer done: Y0 is on. Release X0 and the rung resets.':on?'Timer running: '+t.toFixed(1)+' s of 2.0 s':'Hold the button. When X0 stays on for 2 seconds, the timer finishes and turns on output Y0.'}
+function go(v){if(v===on)return;on=v;clearInterval(iv);if(v){iv=setInterval(function(){t=Math.min(t+.1,2);draw()},100)}else t=0;draw()}
+b.addEventListener('pointerdown',function(e){e.preventDefault();go(true)});['pointerup','pointerleave','pointercancel'].forEach(function(n){b.addEventListener(n,function(){go(false)})});
+b.addEventListener('keydown',function(e){if(e.key===' '||e.key==='Enter'){e.preventDefault();go(true)}});b.addEventListener('keyup',function(){go(false)})}};
+
+var MODS=[['Module 1: Introduction to PLC and industrial automation',['What is a PLC?','Why industries use PLCs','PLC architecture','PLC scan cycle','Real-world automation applications']],['Module 2: Getting started with TwinCAT 3',['Introduction to Beckhoff TwinCAT','Development environment','Creating a PLC project','Runtime and PLC configuration']],['Module 3: Structured Text programming',['Variables and data types','Operators and expressions','IF and ELSE statements','CASE statements','FOR and WHILE loops']],['Module 4: PLC program architecture',['Programs','Functions','Function blocks','Global variable lists','Reusable programming structures']],['Module 5: Timers and counters',['TON, TOF and TP','CTU and CTD','Practical timing applications']],['Module 6: Practical PLC applications',['Motor control','Sensor logic','Interlocking','Sequence control','Conveyor applications']],['Module 7: Debugging and troubleshooting',['Online monitoring','Watch windows','Breakpoints','Common programming errors','Troubleshooting techniques']],['Module 8: Final practical project',['Automated conveyor sorting system','Sensor detection and product counting','Conveyor sequence and sorting logic','Fault handling','Final assessment']]];
+
+R.courses={t:'Online Engineering Courses | PLC, Automation & Robotics – BrainForging',h:function(){return '<section><h1>Find the right course for your engineering journey.</h1><p>Whether you are starting out or improving your technical skills, explore structured courses designed around practical understanding and application.</p><div class="card"><span class="tag">Available</span><h3>Beckhoff TwinCAT 3 – PLC Programming Fundamentals</h3><p>Level: beginner to intermediate. Format: self-paced. Method: explanations, examples, exercises and assessments.</p></div><br>'+btn('View course','twincat')+'</section><section style="border:0"><h2>Coming soon</h2>'+cards([['Robotics programming','Planned'],['ROS 2 fundamentals','Planned'],['Industrial communication','Planned'],['Embedded systems','Planned'],['Industrial IoT','Planned']])+'</section>'}};
+
+R.twincat={t:'Beckhoff TwinCAT 3 Course | PLC Programming & Structured Text',h:function(){return '<section><h1>Learn Beckhoff TwinCAT 3 through practical engineering.</h1><p>Understand the fundamentals, explore the TwinCAT 3 environment, write Structured Text programs and practise concepts through industrial automation scenarios.</p>'+btn('Start learning','register')+'</section>'+
+'<section><h2>What you will learn</h2>'+ul(['Understand PLC architecture and operation','Explain the PLC scan cycle','Navigate the TwinCAT 3 development environment','Create basic PLC projects','Write Structured Text with conditions and loops','Use programs, functions and function blocks','Work with timers and counters','Monitor and debug PLC applications'])+'</section>'+
+'<section><h2>Who should take this course?</h2>'+cards([['Engineering students','Build practical knowledge of PLC programming and automation.'],['Fresh graduates','Build a foundation in industrial control software.'],['Working professionals','Strengthen your TwinCAT 3 and PLC concepts.'],['Beginners','Start with structured explanations and practical examples.']])+'<h3 style="margin-top:28px">Requirements</h3>'+ul(['Basic computer knowledge','Interest in industrial automation','No advanced PLC knowledge needed for beginner modules','TwinCAT 3 installation may be needed for some exercises'])+'</section>'+
+'<section><h2>Curriculum</h2>'+MODS.map(function(m){return '<div class="mod"><h3>'+m[0]+'</h3>'+ul(m[1])+'</div>'}).join('')+'</section>'+
+'<section style="border:0"><h2>Our learning method</h2><p>Every lesson: understand the concept, explore a real-world example, learn the application, study the TwinCAT implementation, complete a practical exercise, then answer five assessment questions. You must reach the passing score to unlock the next lesson.</p>'+btn('Enrol in the course','register')+'</section>'}};
+
+R['how-we-teach']={t:'How BrainForging Works | Practical Engineering Learning',h:function(){return '<section style="border:0"><h1>Learn by understanding. Improve through practice.</h1><p>Technical education should be more than reading definitions or watching videos. Every topic should help you understand an idea and apply it.</p>'+cards([['Understand','We break concepts into smaller, easy-to-follow explanations.'],['Relate','We connect each concept to familiar situations and industrial applications.'],['Implement','We show how it is implemented with real engineering tools and code.'],['Practise','Exercises strengthen your understanding.'],['Evaluate','Answer five questions per lesson, review mistakes and retry until you reach the required score.'],['Build','Apply your knowledge in assignments and projects.']])+'</section>'}};
+
+R.projects={t:'Practical Engineering Projects | PLC & Robotics Projects – BrainForging',h:function(){return '<section><h1>Turn engineering knowledge into practical skills.</h1><p>Applying a concept in a complete system is where deeper learning happens. These are the planned project areas.</p>'+cards([['PLC projects','Automated conveyor sorting, motor control, product counting, alarm and fault monitoring.'],['Industrial automation','Automatic water tank control, machine sequencing, sensor-based automation, communication monitoring.'],['Robotics','Robot pick-and-place simulation, motion programming, automated inspection.'],['ROS 2','Turtlesim, mobile robot control, sensor integration, navigation fundamentals.']])+'</section><section style="border:0"><h3>Every published project includes</h3>'+ul(['Project overview and learning objectives','Required software and hardware','System architecture','Step-by-step activities','Expected results','Assessment criteria'])+'</section>'}};
+
+R['learning-paths']={t:'Engineering Learning Paths | Automation & Robotics – BrainForging',h:function(){var P=[['Industrial automation engineer',['Electrical and automation fundamentals','PLC programming fundamentals','Structured Text programming','Industrial communication','Practical automation projects']],['PLC programmer',['PLC fundamentals','IEC 61131-3 programming concepts','TwinCAT 3 development','Timers, counters and function blocks','Debugging and practical applications']],['Robotics developer',['Programming fundamentals','Robotics fundamentals','ROS 2 fundamentals','Robot simulation and control','Autonomous robotics projects']]];
+return '<section><h1>Know what to learn next.</h1><p>Learning paths organise related courses into stages. Stages without a published course are planned.</p></section><section style="border:0">'+P.map(function(p){return '<div class="mod"><h3>'+p[0]+'</h3><ol class="l">'+p[1].map(function(s){return '<li>'+s+'</li>'}).join('')+'</ol></div>'}).join('')+'</section>'}};
+
+R.about={t:'About BrainForging | Practical Engineering Education',h:function(){return '<section><h1>Engineering knowledge should lead to engineering skills.</h1><p>BrainForging is built on a simple idea: engineering should be learned through understanding, practice and implementation. We combine fundamentals, real-world examples, interactive exercises and project-based learning.</p></section><section><div class="grid"><div><h2>Our mission</h2><p>To help engineering students, aspiring professionals and working engineers build practical technical knowledge and become confident problem-solvers.</p></div><div><h2>Our vision</h2><p>A learning environment where learners move beyond theory and develop the ability to understand, program and build engineering systems.</p></div></div></section><section style="border:0"><h2>What we focus on</h2>'+ul(['Industrial automation','PLC programming','Beckhoff TwinCAT','Robotics and ROS 2','Industrial communication','Embedded systems'])+'<p><strong>Don’t just memorise how something works. Understand why it works and learn how to apply it.</strong></p></section>'}};
+
+function formView(title,intro,fields,cta,done){return '<section style="border:0"><h1>'+title+'</h1><p>'+intro+'</p><form id="f" novalidate>'+fields+'<button class="btn" type="submit" style="margin:0">'+cta+'</button></form><div id="ok"></div></section>'}
+function fld(l,n,ty,req,ex){return '<label>'+l+(req?'':' (optional)')+(ty==='ta'?'<textarea name="'+n+'" rows="5"'+(req?' required':'')+'></textarea>':'<input name="'+n+'" type="'+ty+'"'+(req?' required':'')+(ex||'')+'>')+'</label>'}
+R.contact={t:'Contact BrainForging | Engineering Learning Support',h:function(){return formView('Let’s talk engineering.','Have a question about a course, learning path or technical topic? Send us a message.',fld('Full name','name','text',1)+fld('Email address','email','email',1)+fld('Phone number with country code','phone','tel',0)+fld('Subject','sub','text',1)+fld('Message','msg','ta',1),'Send message')},i:function(){submit(async function(v,f){var r=await sb.from('messages').insert({name:v.name,email:v.email,phone:v.phone||null,subject:v.sub,message:v.msg});if(r.error){say('Your message wasn’t sent: '+esc(r.error.message));return}say('Thanks, your message was sent. We’ll reply by email.');f.reset()})}};
+R.register={t:'Create Your BrainForging Account | Start Learning Engineering',h:function(){return formView('Start building your engineering skills.','Create your account to access lessons, exercises, assessments and learning progress.',fld('Full name','name','text',1)+fld('Email address','email','email',1)+fld('Phone number with country code','phone','tel',1)+fld('Country','country','text',1)+fld('Password','pw','password',1,' minlength="8" autocomplete="new-password"')+fld('Confirm password','pw2','password',1,' autocomplete="new-password"')+fld('Education level','edu','text',0)+fld('Learning goals','goal','ta',0)+'<label style="display:flex;gap:8px;align-items:flex-start"><input type="checkbox" name="terms" required style="margin-top:5px"> I agree to the Terms of Service and Privacy Policy.</label><label style="display:flex;gap:8px;align-items:flex-start"><input type="checkbox" name="mkt" style="margin-top:5px"> Send me course updates (optional).</label>','Create account')},i:function(){submit(async function(v){if(v.pw!==v.pw2){say('The passwords don’t match. Re-enter both and submit again.');return}
+var r=await sb.auth.signUp({email:v.email,password:v.pw,options:{emailRedirectTo:location.origin+location.pathname,data:{full_name:v.name,phone:v.phone,country:v.country,education:v.edu||'',goals:v.goal||'',marketing:!!v.mkt}}});
+if(r.error){say(esc(r.error.message));return}
+if(r.data.session){location.hash='dashboard'}else say('Account created. Check your email and open the confirmation link in this same browser.')})}};
+
+R.login={t:'Log in | BrainForging',h:function(){return formView('Welcome back.','Log in to continue learning.',fld('Email address','email','email',1)+fld('Password','pw','password',1,' autocomplete="current-password"'),'Log in')+'<p><a href="#" id="fp">Forgot your password?</a></p><p><a href="#register">Create an account</a></p>'},i:function(){
+submit(async function(v){var r=await sb.auth.signInWithPassword({email:v.email,password:v.pw});if(r.error){say(esc(r.error.message));return}location.hash='dashboard'});
+document.getElementById('fp').onclick=function(e){e.preventDefault();var em=document.querySelector('#f [name=email]').value;if(!em){say('Enter your email address above first, then select “Forgot your password?” again.');return}if(!sb)return;
+sb.auth.resetPasswordForEmail(em,{redirectTo:location.origin+location.pathname}).then(function(r){say(r.error?esc(r.error.message):'If that email has an account, a reset link is on its way. Open it in this same browser.')})}}};
+R.reset={t:'Set a new password | BrainForging',h:function(){return formView('Set a new password.','Choose a new password for your account.',fld('New password','pw','password',1,' minlength="8" autocomplete="new-password"'),'Save password')},i:function(){submit(async function(v){var r=await sb.auth.updateUser({password:v.pw});if(r.error){say(esc(r.error.message));return}say('Password updated.');setTimeout(function(){location.hash='dashboard'},1200)})}};
+R.dashboard={t:'Your dashboard | BrainForging',h:function(){return '<section style="border:0"><h1 id="dh">Your dashboard</h1><div id="dc"><p>Loading…</p></div></section>'},i:function(){
+if(!sb){document.getElementById('dc').innerHTML='<p>The database connection didn’t load. Reload the page.</p>';return}
+sb.auth.getSession().then(function(r){var s=r.data.session;if(!s){location.hash='login';return}
+return Promise.all([sb.from('profiles').select('full_name').eq('id',s.user.id).maybeSingle(),sb.from('progress').select('lesson').eq('user_id',s.user.id).eq('passed',true)]).then(function(a){
+var n=a[0].data&&a[0].data.full_name||'',c=a[1].data?a[1].data.length:0;
+document.getElementById('dh').textContent='Welcome back'+(n?', '+n:'')+'.';
+document.getElementById('dc').innerHTML=cards([['Lessons completed',String(c)],['Your course','Beckhoff TwinCAT 3 – PLC Programming Fundamentals. Lessons will appear here once they are published.']])+'<br>'+btn('View course','twincat')+'<button class="btn alt" id="out">Log out</button>';
+document.getElementById('out').onclick=function(){sb.auth.signOut().then(function(){location.hash='home'})}})})}};
+
+var NAV=[['courses','Courses'],['learning-paths','Learning paths'],['projects','Projects'],['how-we-teach','How we teach'],['about','About'],['contact','Contact']];
+function nav(){document.getElementById('nav').innerHTML='<a class="logo" href="#home">BrainForging</a>'+NAV.map(function(n){return '<a href="#'+n[0]+'"'+(n[0]===cur?' class="on"':'')+'>'+n[1]+'</a>'}).join('')+(user?'<a class="btn" style="margin:0;padding:8px 16px" href="#dashboard">Dashboard</a>':'<a href="#login">Log in</a><a class="btn" style="margin:0;padding:8px 16px" href="#register">Sign up</a>')}
+function route(){var k=(location.hash||'#home').slice(1);if(!R[k])k='home';var r=R[k];document.title=r.t;
+document.getElementById('app').innerHTML=r.h();if(r.i)r.i();
+cur=k;nav();
+window.scrollTo(0,0)}
+document.getElementById('foot').innerHTML='<div class="grid"><div><strong>BrainForging</strong><br>Learn. Practise. Build.<br>Practical engineering education that connects technical knowledge with real-world applications.</div><div><strong>Explore</strong><a href="#courses">Courses</a><a href="#learning-paths">Learning paths</a><a href="#projects">Projects</a><a href="#about">About</a></div><div><strong>Topics</strong><a href="#twincat">TwinCAT 3</a><a href="#courses">PLC programming</a><a href="#projects">Robotics and ROS 2</a></div><div><strong>Support</strong><a href="#contact">Contact</a></div></div>© 2026 BrainForging. All rights reserved.';
+if(sb)sb.auth.onAuthStateChange(function(ev,se){user=se?se.user:null;if(ev==='PASSWORD_RECOVERY'){location.hash='reset'}nav()});
+window.addEventListener('hashchange',route);route();
+</script>
+</body>
+</html>
